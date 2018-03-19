@@ -1,3 +1,6 @@
 aiohttp
 aiodns
 async_timeout
+lxml
+pyppeteer
+asynctest
