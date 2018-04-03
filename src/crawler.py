@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 import logging
 import asyncio
 from typing import Optional
@@ -7,17 +5,15 @@ from collections import Counter
 
 import lxml.html as l
 import math
+
+import time
 from pyppeteer import launch
 from pyppeteer.element_handle import ElementHandle
 
-from storage import S
+from src.storage import S
 
-
-START_VIDEO_HASH = 'ph59fcf23b6203e'
 TIMEOUT = 10
-MAX_CONCURRENT_CLIENTS = 10
 URL_TEMPLATE = 'https://www.pornhub.com/view_video.php?viewkey=%s'
-BATCH_SIZE = 100
 MAX_TRIES_PARSE = 10
 
 _BROWSER = None
@@ -112,37 +108,26 @@ async def crawl_one(hash: str, page, cnt: Counter) -> tuple:
     return out, title
 
 
-async def run(max_iterations: int=100, reset_db: bool=False):
+async def run(max_iterations: int=100, batch_size: int=100, concurrent: int=10):
+    start_time = time.time()
     S.set_io_loop(asyncio.get_event_loop())
     cnt = Counter()
 
-    if reset_db:
-        pass
-
+    logging.info('crawling start %s', (max_iterations, batch_size, concurrent))
     iter_num = 1
-    await S.add_video_hash(START_VIDEO_HASH)
-
     while iter_num <= max_iterations:
-        videos_for_parsing = await S.get_videos_for_parsing(BATCH_SIZE, MAX_TRIES_PARSE)
+        videos_for_parsing = await S.get_videos_for_parsing(batch_size, MAX_TRIES_PARSE)
         logging.info('start %d crawling iteration (%d videos)', iter_num, len(videos_for_parsing))
         if not len(videos_for_parsing):
             break
 
-        await crawl_many_videos_pool(MAX_CONCURRENT_CLIENTS, videos_for_parsing, cnt)
+        await crawl_many_videos_pool(concurrent, videos_for_parsing, cnt)
         logging.info('end %d crawling iteration (%s)', iter_num, cnt.items())
         iter_num += 1
 
-    logging.info('end with counters %s', cnt.items())
+    logging.info('crawling end %s %.2fsec', cnt.items(), time.time() - start_time)
     try:
+        await asyncio.sleep(5)
         await _BROWSER.close()
     except:
         pass
-
-
-if __name__ == '__main__':
-    # todo cli args
-    # todo reset mode
-    logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.INFO)
-    ioloop = asyncio.new_event_loop()
-    ioloop.run_until_complete(run())
-    ioloop.close()

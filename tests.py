@@ -4,7 +4,7 @@ from collections import Counter
 
 import asynctest
 
-from pyppeteer_v1 import crawl_many_videos_legacy, crawl_many_videos_pool
+from src.crawler import crawl_many_videos_legacy, crawl_many_videos_pool
 
 concurrency = 100
 task_count_factor = 20

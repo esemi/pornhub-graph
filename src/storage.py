@@ -16,6 +16,9 @@ class Storage:
     def set_io_loop(self, loop):
         self.client.io_loop = loop
 
+    async def drop_all(self):
+        await self.videos.drop()
+
     async def mark_video_as_parsed(self, video_hash: str, title: str, relations: set):
         await self.videos.update_one({'_id': video_hash}, {'$set': {'title': title, 'parsed': True,
                                                                     'rel': list(relations)}})
@@ -25,7 +28,7 @@ class Storage:
 
     async def get_videos_for_parsing(self, limit: int, max_tries: int) -> set:
         return set(map(lambda x: x['_id'],
-                       await self.videos.find({'parsed': False, 'parse_try': {'$lte': max_tries}}, projection=['_id'],
+                       await self.videos.find({'parsed': False, 'parse_try': {'$lt': max_tries}}, projection=['_id'],
                                               limit=limit).to_list(None)))
 
     async def add_video_hash(self, video_hash: str) -> bool:
