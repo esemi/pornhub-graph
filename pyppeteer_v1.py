@@ -3,9 +3,12 @@
 import logging
 from collections import Counter
 import asyncio
+from typing import Optional
 
 from pyppeteer import launch
 import lxml.html as l
+from pyppeteer.element_handle import ElementHandle
+from pyppeteer.page import Page
 
 from storage import S
 
@@ -17,6 +20,11 @@ URL_TEMPLATE = 'https://www.pornhub.com/view_video.php?viewkey=%s'
 BATCH_SIZE = 100
 
 _BROWSER = None
+
+
+async def parse_title(title: ElementHandle) -> Optional[str]:
+    json_title = await (await title.getProperty('innerHTML')).jsonValue()
+    return str(json_title).replace(' - Pornhub.com', '')
 
 
 def parse_similar_videos(source_html) -> set:
@@ -40,6 +48,9 @@ async def crawl_many_videos(concurrency: int, video_hashes: set, cnt: Counter=No
             for r in relations:
                 await S.add_video_hash(r)
             await S.mark_video_as_parsed(current_video, title, relations)
+        else:
+            # todo skip if too many parse errors
+            pass
     await page.close()
 
 
@@ -55,27 +66,27 @@ async def crawl_one(hash: str, page, cnt: Counter) -> tuple:
         logging.info('fetch %s url code %s', url, code)
         if code == 200:
             try:
-                title = await page.waitForSelector('head > title', timeout=TIMEOUT * 1000)
+                title_elem = await page.waitForSelector('head > title', timeout=TIMEOUT * 1000)
+                title = await parse_title(title_elem)
                 response_content = await resp.text()
                 result = parse_similar_videos(response_content)
                 if not result:
                     logging.warning('parse %s url: not found hashes', url)
                     cnt['similar_not_found'] += 1
-                # elif not title:
-                #     logging.warning('parse %s url: not found title', url)
-                #     cnt['title_not_found'] += 1
+                elif not title:
+                    logging.warning('parse %s url: not found title', url)
+                    cnt['title_not_found'] += 1
                 else:
                     logging.info('parse %s url: found %d hashes', url, len(result))
                     out = out | result
             except Exception as e:
                 cnt['exception_parse'] += 1
-                logging.warning('parse %s url exception %s', url, type(e))
-                logging.exception(e)
+                logging.warning('parse %s url exception %s %s', url, type(e), str(e))
     except Exception as e:
         cnt['exception_fetch'] += 1
-        logging.warning('fetch %s url exception %s', url, type(e))
+        logging.warning('fetch %s url exception %s %s', url, type(e), str(e))
 
-    return out, 'todo'
+    return out, title
 
 
 async def run(max_iterations: int=100, reset_db: bool=False):
@@ -96,7 +107,7 @@ async def run(max_iterations: int=100, reset_db: bool=False):
             break
 
         await crawl_many_videos(MAX_CONCURRENT_CLIENTS, videos_for_parsing, cnt)
-        logging.info('end %d level crawling (%s)', iter_num, cnt.items())
+        logging.info('end %d crawling iteration (%s)', iter_num, cnt.items())
         iter_num += 1
 
     logging.info('end with counters %s', cnt.items())
