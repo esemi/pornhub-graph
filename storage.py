@@ -20,15 +20,16 @@ class Storage:
         await self.videos.update_one({'_id': video_hash}, {'$set': {'title': title, 'parsed': True,
                                                                     'rel': list(relations)}})
 
-    async def get_videos_for_parsing(self, limit: int) -> set:
-        return set(map(lambda x: x['_id'],
-                       await self.videos.find({'parsed': False}, projection=['_id'], limit=limit).to_list(None)))
+    async def mark_video_as_parsed_fail(self, video_hash: str):
+        await self.videos.update_one({'_id': video_hash}, {'$inc': {'parse_try': 1}})
 
-    async def mark_video_as_parsed_fail(self, from_hash: str):
-        pass
+    async def get_videos_for_parsing(self, limit: int, max_tries: int) -> set:
+        return set(map(lambda x: x['_id'],
+                       await self.videos.find({'parsed': False, 'parse_try': {'$lte': max_tries}}, projection=['_id'],
+                                              limit=limit).to_list(None)))
 
     async def add_video_hash(self, video_hash: str) -> bool:
-        video = {'_id': video_hash, 'parsed': False}
+        video = {'_id': video_hash, 'parsed': False, 'parse_try': 0}
         try:
             await self.videos.insert_one(video)
             return True

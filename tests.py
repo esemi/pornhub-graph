@@ -4,7 +4,7 @@ from collections import Counter
 
 import asynctest
 
-from pyppeteer_v1 import crawl_many_videos, crawl_many_videos_pool
+from pyppeteer_v1 import crawl_many_videos_legacy, crawl_many_videos_pool
 
 concurrency = 100
 task_count_factor = 20
@@ -20,7 +20,7 @@ class SpeedTest(asynctest.TestCase):
     async def test_speed_one_page(self):
         cnt = Counter()
         t = time.time()
-        await crawl_many_videos(concurrency, random_videos, cnt)
+        await crawl_many_videos_legacy(concurrency, random_videos, cnt)
         end_time = time.time()
         print('One page version result %.2f %s' % (end_time - t, cnt))
 

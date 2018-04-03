@@ -18,6 +18,7 @@ TIMEOUT = 10
 MAX_CONCURRENT_CLIENTS = 10
 URL_TEMPLATE = 'https://www.pornhub.com/view_video.php?viewkey=%s'
 BATCH_SIZE = 100
+MAX_TRIES_PARSE = 10
 
 _BROWSER = None
 
@@ -32,7 +33,7 @@ def parse_similar_videos(source_html) -> set:
     return {r.get('_vkey') for r in doc.xpath('//ul[@id="relatedVideosCenter"]/li[@_vkey]') if len(r.get('_vkey')) == 15}
 
 
-async def crawl_many_videos(concurrency: int, video_hashes, cnt: Counter=None):
+async def crawl_many_videos_legacy(concurrency: int, video_hashes, cnt: Counter=None):
     global _BROWSER
     if _BROWSER is None:
         _BROWSER = await launch()
@@ -67,7 +68,6 @@ async def crawl_many_videos_pool(concurrency: int, video_hashes, cnt: Counter=No
                     await S.add_video_hash(r)
                 await S.mark_video_as_parsed(current_video, title, relations)
             else:
-                # todo skip if too many parse errors
                 await S.mark_video_as_parsed_fail(current_video)
         await page.close()
 
@@ -123,7 +123,7 @@ async def run(max_iterations: int=100, reset_db: bool=False):
     await S.add_video_hash(START_VIDEO_HASH)
 
     while iter_num <= max_iterations:
-        videos_for_parsing = await S.get_videos_for_parsing(BATCH_SIZE)
+        videos_for_parsing = await S.get_videos_for_parsing(BATCH_SIZE, MAX_TRIES_PARSE)
         logging.info('start %d crawling iteration (%d videos)', iter_num, len(videos_for_parsing))
         if not len(videos_for_parsing):
             break
@@ -134,7 +134,6 @@ async def run(max_iterations: int=100, reset_db: bool=False):
 
     logging.info('end with counters %s', cnt.items())
     try:
-        await asyncio.sleep(TIMEOUT)
         await _BROWSER.close()
     except:
         pass
