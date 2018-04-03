@@ -1,14 +1,13 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import logging
-from collections import Counter
 import asyncio
 from typing import Optional
+from collections import Counter
 
-from pyppeteer import launch
 import lxml.html as l
+from pyppeteer import launch
 from pyppeteer.element_handle import ElementHandle
-from pyppeteer.page import Page
 
 from storage import S
 
