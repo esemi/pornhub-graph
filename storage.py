@@ -24,6 +24,9 @@ class Storage:
         return set(map(lambda x: x['_id'],
                        await self.videos.find({'parsed': False}, projection=['_id'], limit=limit).to_list(None)))
 
+    async def mark_video_as_parsed_fail(self, from_hash: str):
+        pass
+
     async def add_video_hash(self, video_hash: str) -> bool:
         video = {'_id': video_hash, 'parsed': False}
         try:
@@ -31,9 +34,6 @@ class Storage:
             return True
         except DuplicateKeyError:
             return False
-
-    def save_relations(self, from_hash: str, relations: set):
-        pass
 
 
 S = Storage()

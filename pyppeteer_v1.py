@@ -6,6 +6,7 @@ from typing import Optional
 from collections import Counter
 
 import lxml.html as l
+import math
 from pyppeteer import launch
 from pyppeteer.element_handle import ElementHandle
 
@@ -14,7 +15,7 @@ from storage import S
 
 START_VIDEO_HASH = 'ph59fcf23b6203e'
 TIMEOUT = 10
-MAX_CONCURRENT_CLIENTS = 1
+MAX_CONCURRENT_CLIENTS = 10
 URL_TEMPLATE = 'https://www.pornhub.com/view_video.php?viewkey=%s'
 BATCH_SIZE = 100
 
@@ -31,10 +32,8 @@ def parse_similar_videos(source_html) -> set:
     return {r.get('_vkey') for r in doc.xpath('//ul[@id="relatedVideosCenter"]/li[@_vkey]') if len(r.get('_vkey')) == 15}
 
 
-async def crawl_many_videos(concurrency: int, video_hashes: set, cnt: Counter=None):
+async def crawl_many_videos(concurrency: int, video_hashes, cnt: Counter=None):
     global _BROWSER
-    # todo concurency
-    # todo pages pool?
     if _BROWSER is None:
         _BROWSER = await launch()
     if cnt is None:
@@ -48,9 +47,34 @@ async def crawl_many_videos(concurrency: int, video_hashes: set, cnt: Counter=No
                 await S.add_video_hash(r)
             await S.mark_video_as_parsed(current_video, title, relations)
         else:
-            # todo skip if too many parse errors
-            pass
+            await S.mark_video_as_parsed_fail(current_video)
     await page.close()
+
+
+async def crawl_many_videos_pool(concurrency: int, video_hashes, cnt: Counter=None):
+    global _BROWSER
+    if _BROWSER is None:
+        _BROWSER = await launch()
+    if cnt is None:
+        cnt = Counter()
+
+    async def pool_task(video_hashes: list, cnt: Counter):
+        page = await _BROWSER.newPage()
+        for current_video in video_hashes:
+            relations, title = await crawl_one(current_video, page, cnt)
+            if relations:
+                for r in relations:
+                    await S.add_video_hash(r)
+                await S.mark_video_as_parsed(current_video, title, relations)
+            else:
+                # todo skip if too many parse errors
+                await S.mark_video_as_parsed_fail(current_video)
+        await page.close()
+
+    video_hashes = list(video_hashes)
+    chunk_size = round(math.ceil(len(video_hashes) / min(len(video_hashes), concurrency)))
+    tasks = [pool_task(video_hashes[i:i + chunk_size], cnt) for i in range(0, len(video_hashes), chunk_size)]
+    await asyncio.gather(*tasks)
 
 
 async def crawl_one(hash: str, page, cnt: Counter) -> tuple:
@@ -93,7 +117,6 @@ async def run(max_iterations: int=100, reset_db: bool=False):
     cnt = Counter()
 
     if reset_db:
-        # todo
         pass
 
     iter_num = 1
@@ -105,7 +128,7 @@ async def run(max_iterations: int=100, reset_db: bool=False):
         if not len(videos_for_parsing):
             break
 
-        await crawl_many_videos(MAX_CONCURRENT_CLIENTS, videos_for_parsing, cnt)
+        await crawl_many_videos_pool(MAX_CONCURRENT_CLIENTS, videos_for_parsing, cnt)
         logging.info('end %d crawling iteration (%s)', iter_num, cnt.items())
         iter_num += 1
 
