@@ -61,6 +61,7 @@ async def crawl_many_videos_pool(concurrency: int, video_hashes, cnt: Counter=No
             relations, title = await crawl_one(current_video, page, cnt)
             if relations:
                 for r in relations:
+                    # todo save depth level
                     await S.add_video_hash(r)
                 await S.mark_video_as_parsed(current_video, title, relations)
             else:
