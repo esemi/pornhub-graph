@@ -7,14 +7,15 @@ import asyncio
 from pyppeteer import launch
 import lxml.html as l
 
+from storage import S
+
 
 START_VIDEO_HASH = 'ph59fcf23b6203e'
-TIMEOUT = 20
-DEPTH = 1
+TIMEOUT = 10
 MAX_CONCURRENT_CLIENTS = 1
 URL_TEMPLATE = 'https://www.pornhub.com/view_video.php?viewkey=%s'
+BATCH_SIZE = 100
 
-# todo save result as graph
 _BROWSER = None
 
 
@@ -23,23 +24,28 @@ def parse_similar_videos(source_html) -> set:
     return {r.get('_vkey') for r in doc.xpath('//ul[@id="relatedVideosCenter"]/li[@_vkey]') if len(r.get('_vkey')) == 15}
 
 
-async def fetch_many(concurrency: int, video_hashes: set, cnt: Counter=None) -> tuple:
+async def crawl_many_videos(concurrency: int, video_hashes: set, cnt: Counter=None):
     global _BROWSER
+    # todo concurency
+    # todo pages pool?
     if _BROWSER is None:
         _BROWSER = await launch()
     if cnt is None:
         cnt = Counter()
+
     page = await _BROWSER.newPage()
-    hash_buffer = []
-    for hash in video_hashes:
-        res = await _task(hash, page, cnt)
-        hash_buffer += list(res)
-    video_hashes = set(hash_buffer)
-    return video_hashes, {}
+    for current_video in video_hashes:
+        relations, title = await crawl_one(current_video, page, cnt)
+        if relations:
+            for r in relations:
+                await S.add_video_hash(r)
+            await S.mark_video_as_parsed(current_video, title, relations)
+    await page.close()
 
 
-async def _task(hash: str, page, cnt: Counter) -> set:
+async def crawl_one(hash: str, page, cnt: Counter) -> tuple:
     out = set()
+    title = None
     url = URL_TEMPLATE % hash
     logging.info('fetch %s url', url)
     try:
@@ -49,40 +55,49 @@ async def _task(hash: str, page, cnt: Counter) -> set:
         logging.info('fetch %s url code %s', url, code)
         if code == 200:
             try:
-                await page.waitForSelector('head > title', timeout=TIMEOUT * 1000)
+                title = await page.waitForSelector('head > title', timeout=TIMEOUT * 1000)
                 response_content = await resp.text()
                 result = parse_similar_videos(response_content)
-                if result:
+                if not result:
+                    logging.warning('parse %s url: not found hashes', url)
+                    cnt['similar_not_found'] += 1
+                # elif not title:
+                #     logging.warning('parse %s url: not found title', url)
+                #     cnt['title_not_found'] += 1
+                else:
                     logging.info('parse %s url: found %d hashes', url, len(result))
                     out = out | result
-                else:
-                    logging.info('parse %s url: not found hashes', url)
-                    cnt['similar_not_found'] += 1
             except Exception as e:
                 cnt['exception_parse'] += 1
-                logging.info('parse %s url exception %s', url, type(e))
+                logging.warning('parse %s url exception %s', url, type(e))
                 logging.exception(e)
     except Exception as e:
         cnt['exception_fetch'] += 1
-        logging.info('fetch %s url exception %s', url, type(e))
+        logging.warning('fetch %s url exception %s', url, type(e))
 
-    return out
+    return out, 'todo'
 
 
-async def run():
-    current_depth = 0
+async def run(max_iterations: int=100, reset_db: bool=False):
+    S.set_io_loop(asyncio.get_event_loop())
     cnt = Counter()
-    videos_per_level = dict()
-    video_hashes = {START_VIDEO_HASH}
 
-    while current_depth <= DEPTH and len(video_hashes):
-        logging.info('start %d level crawling (%d videos)', current_depth, len(video_hashes))
+    if reset_db:
+        # todo
+        pass
 
-        video_hashes, _ = await fetch_many(MAX_CONCURRENT_CLIENTS, video_hashes, cnt)
-        videos_per_level[current_depth] = video_hashes
+    iter_num = 1
+    await S.add_video_hash(START_VIDEO_HASH)
 
-        logging.info('end %d level crawling (%d videos found)', current_depth, len(video_hashes))
-        current_depth += 1
+    while iter_num <= max_iterations:
+        videos_for_parsing = await S.get_videos_for_parsing(BATCH_SIZE)
+        logging.info('start %d crawling iteration (%d videos)', iter_num, len(videos_for_parsing))
+        if not len(videos_for_parsing):
+            break
+
+        await crawl_many_videos(MAX_CONCURRENT_CLIENTS, videos_for_parsing, cnt)
+        logging.info('end %d level crawling (%s)', iter_num, cnt.items())
+        iter_num += 1
 
     logging.info('end with counters %s', cnt.items())
     try:
@@ -93,6 +108,8 @@ async def run():
 
 
 if __name__ == '__main__':
+    # todo cli args
+    # todo reset mode
     logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.INFO)
     ioloop = asyncio.new_event_loop()
     ioloop.run_until_complete(run())

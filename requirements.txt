@@ -4,3 +4,5 @@ async_timeout
 lxml
 pyppeteer
 asynctest
+motor
+pymongo
