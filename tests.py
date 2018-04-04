@@ -4,9 +4,9 @@ from collections import Counter
 
 import asynctest
 
-from src.crawler import crawl_many_videos_legacy, crawl_many_videos_pool
+from src.crawler import crawl_many_videos_pool
 
-concurrency = 100
+concurrency = 1
 task_count_factor = 20
 
 random_videos = {'ph59d38bc435f0f', 'ph590df19b8e7b9', 'ph5a04a7c416bc1', 'ph59ad0a3e49544', 'ph59fcf23b6203e',
@@ -17,17 +17,10 @@ random_videos = list(random_videos) * task_count_factor
 class SpeedTest(asynctest.TestCase):
     use_default_loop = True
 
-    async def test_speed_one_page(self):
-        cnt = Counter()
-        t = time.time()
-        await crawl_many_videos_legacy(concurrency, random_videos, cnt)
-        end_time = time.time()
-        print('One page version result %.2f %s' % (end_time - t, cnt))
-
     async def test_speed_many_pages(self):
         cnt = Counter()
         t = time.time()
-        await crawl_many_videos_pool(concurrency, random_videos, cnt)
+        await crawl_many_videos_pool(concurrency, [(i, 1) for i in random_videos[:100]], cnt)
         end_time = time.time()
         print('Many pages version result %.2f %s' % (end_time - t, cnt))
 

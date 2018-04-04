@@ -1,3 +1,4 @@
+import pymongo
 from pymongo.errors import DuplicateKeyError
 import motor.motor_asyncio
 
@@ -21,22 +22,24 @@ class Storage:
 
     async def mark_video_as_parsed(self, video_hash: str, title: str, relations: set):
         await self.videos.update_one({'_id': video_hash}, {'$set': {'title': title, 'parsed': True,
-                                                                    'rel': list(relations)}})
+                                                                    'rel': list(relations)},
+                                                           '$inc': {'parse_try': 1}})
 
     async def mark_video_as_parsed_fail(self, video_hash: str):
         await self.videos.update_one({'_id': video_hash}, {'$inc': {'parse_try': 1}})
 
-    async def get_videos_for_parsing(self, limit: int, max_tries: int) -> set:
-        return set(map(lambda x: x['_id'],
-                       await self.videos.find({'parsed': False, 'parse_try': {'$lt': max_tries}}, projection=['_id'],
-                                              limit=limit).to_list(None)))
+    async def get_videos_for_parsing(self, limit: int, max_tries: int) -> list:
+        return list(map(lambda x: (x['_id'], x['level']),
+                        await self.videos.find({'parsed': False, 'parse_try': {'$lt': max_tries}},
+                                               projection=['_id', 'level'],
+                                               limit=limit).sort('level', pymongo.ASCENDING).to_list(None)))
 
-    async def add_video_hash(self, video_hash: str) -> bool:
-        video = {'_id': video_hash, 'parsed': False, 'parse_try': 0}
+    async def add_video_hash(self, video_hash: str, level: int=0) -> bool:
         try:
-            await self.videos.insert_one(video)
+            await self.videos.insert_one({'_id': video_hash, 'parsed': False, 'parse_try': 0, 'level': level})
             return True
         except DuplicateKeyError:
+            await self.videos.update_one({'_id': video_hash}, {'$min': {'level': level}})
             return False
 
 
