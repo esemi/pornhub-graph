@@ -20,6 +20,7 @@ DEBUG = False
 _BROWSER = None
 
 # todo correct sigkill handler
+# todo custom user agent
 
 
 async def parse_title(title: ElementHandle) -> Optional[str]:

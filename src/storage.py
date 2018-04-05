@@ -42,5 +42,9 @@ class Storage:
             await self.videos.update_one({'_id': video_hash}, {'$min': {'level': level}})
             return False
 
+    def export_graph(self, max_level: int):
+        return self.videos.find({'parsed': True, 'level': {'$lte': max_level}})\
+            .sort('level', pymongo.ASCENDING).to_list(None)
+
 
 S = Storage()
