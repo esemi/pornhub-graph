@@ -9,7 +9,7 @@ def fetch_current_top(limit: int=10) -> set:
     """
 
     assert limit >= 0
-    response = requests.get('https://www.pornhub.com/webmasters/search?ordering=rating&period=alltime')
+    response = requests.get('https://www.pornhub.com/webmasters/search?ordering=mostviewed&period=alltime')
     response.raise_for_status()
     json_data = response.json()['videos']
     return set(list(map(lambda x: x['video_id'], json_data))[:limit])

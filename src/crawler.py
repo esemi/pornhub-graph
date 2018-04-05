@@ -19,6 +19,8 @@ DEBUG = False
 
 _BROWSER = None
 
+# todo correct sigkill handler
+
 
 async def parse_title(title: ElementHandle) -> Optional[str]:
     json_title = await (await title.getProperty('innerHTML')).jsonValue()
