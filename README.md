@@ -12,7 +12,7 @@ SEMhub проект
 
 ### todo list
 - ~Спарсить БД от топ10~
-- Экспортнуть в файл (DOT https://gephi.org/users/supported-graph-formats/graphviz-dot-format/)
+- ~Экспортнуть в файл (DOT https://gephi.org/users/supported-graph-formats/graphviz-dot-format/)~
 
 #### v1.0
 - Распасовать в gephi
@@ -39,5 +39,8 @@ $ ./run_crawler_from_root.py ph59fcf23b6203e
 $ ./run_crawler_from_top.py --reset -c2 -i1 10
 $ nohup ./run_crawler_from_top.py --continue -c2 -i100 10 > log.log 2>&1 &
 
-$ ./export_dot.py 10
+$ ./export_dot.py -d 3
+$ ./export_dot.py -d 4
+$ ./export_dot.py -d 5
+$ ./export_dot.py -d 6
 ```

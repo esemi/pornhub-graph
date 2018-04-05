@@ -22,7 +22,8 @@ async def main(depth: int):
         output_file.write("digraph SEMhub_level_%d {\n" % depth)
         for node in parsed_nodes:
             cnt['nodes'] += 1
-            output_file.write("\t%s [label='%s',level='%d']\n" % (node['_id'], node['title'], node['level']))
+            title_prepared = node['title'].replace("'", '').replace("[", '').replace("]", '')
+            output_file.write("\t%s [label='%s',level='%d']\n" % (node['_id'], title_prepared, node['level']))
             for edge in node['rel']:
                 cnt['edges_total'] += 1
                 if edge in valid_nodes:
