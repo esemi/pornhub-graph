@@ -7,3 +7,4 @@ asynctest
 requests
 motor
 pymongo
+Fabric3
