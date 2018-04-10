@@ -3,9 +3,14 @@
 import argparse
 import asyncio
 import logging
+import re
 from collections import Counter
 
 from src.storage import S
+
+
+def cleanup_title(title: str) -> str:
+    return re.sub('[\[\]\'\"=,{}]', '', title)
 
 
 async def main(depth: int):
@@ -22,8 +27,9 @@ async def main(depth: int):
         output_file.write("digraph SEMhub_level_%d {\n" % depth)
         for node in parsed_nodes:
             cnt['nodes'] += 1
-            title_prepared = node['title'].replace("'", '').replace("[", '').replace("]", '')
-            output_file.write("\t%s [label='%s',level='%d']\n" % (node['_id'], title_prepared, node['level']))
+            title_prepared = cleanup_title(node['title'])
+            output_file.write("\t%s [label=\"%s\",level=%d,hash=%s]\n" % (node['_id'], title_prepared, node['level'],
+                                                                          node['_id']))
             for edge in node['rel']:
                 cnt['edges_total'] += 1
                 if edge in valid_nodes:

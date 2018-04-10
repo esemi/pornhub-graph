@@ -13,29 +13,19 @@ SEMhub проект
 ### todo list
 - ~Спарсить БД от топ10~
 - ~Экспортнуть в файл (DOT https://gephi.org/users/supported-graph-formats/graphviz-dot-format/)~
-
-#### v1.0
 - Распасовать в gephi
-#### v2.0
-- Распасовать на питоне (igraph)
-
-#### v0.1
-- Порезать на тайлы и натянуть на движок карт
-#### v0.2
-- Отрисовать на shinglejs
-#### v0.3
-- Отрисовать на sigmajs (10-20к вершин максимум)
-
+- Отрисовать на sigmajs (10к вершин максимум)
 - Вверстать в семраш шаблон
-- Деплой в GCP
-- Тест нагрузки (статика же вроде? :) )
-- Статья на хабру? 
+- Полные названия
+- Легенда цветов
+- Ссылка на видео
+- Описание
+- ~Деплой в GCP~
+- Тест нагрузки (статика же вроде? :) ) 
 
 
 
 ```bash
-$ ./run_crawler_from_root.py ph59fcf23b6203e
-
 $ ./run_crawler_from_top.py --reset -c2 -i1 10
 $ nohup ./run_crawler_from_top.py --continue -c2 -i100 10 > log.log 2>&1 &
 
@@ -43,4 +33,10 @@ $ ./export_dot.py -d 3
 $ ./export_dot.py -d 4
 $ ./export_dot.py -d 5
 $ ./export_dot.py -d 6
+$ ./export_dot.py -d 7
+$ gephi step and export to sigma
+
+$ ./prepare_gephi_data.py
+
+$ fab deploy_map
 ```

@@ -44,7 +44,7 @@ class Storage:
 
     def export_graph(self, max_level: int):
         return self.videos.find({'parsed': True, 'level': {'$lte': max_level}})\
-            .sort('level', pymongo.ASCENDING).to_list(None)
+            .sort('_id', pymongo.ASCENDING).to_list(None)
 
 
 S = Storage()

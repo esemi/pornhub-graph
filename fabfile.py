@@ -25,7 +25,11 @@ DEPLOY_PATH = os.path.join(REMOTE_HOME_PATH, 'semhub-deploy')
 BACKUP_PATH = os.path.join(REMOTE_HOME_PATH, 'semhub-backup')
 
 
-def deploy():
+def deploy_map():
+    """
+    Deploy www node with static map only
+    """
+
     # init remote host
     if not exists(APP_PATH):
         run('mkdir -p %s' % APP_PATH)
