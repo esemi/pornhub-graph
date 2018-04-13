@@ -275,10 +275,14 @@ function configSigmaElements(config) {
     }
     $GP.bg = $(sigInst._core.domElements.bg);
     $GP.bg2 = $(sigInst._core.domElements.bg2);
+    let sorted_keys = Object.keys(sigInst.clusters).sort((x, y)=>sigInst.clusters[x].length - sigInst.clusters[y].length)
+
     var a = [],
         b,x=1;
-		for (b in sigInst.clusters) a.push('<div style="line-height:12px"><a href="#' + b + '"><div style="width:40px;height:12px;border:1px solid #fff;background:' + b + ';display:inline-block"></div> Group ' + (x++) + ' (' + sigInst.clusters[b].length + ' members)</a></div>');
-    //a.sort();
+    for (b of sorted_keys) {
+        a.push('<div style="line-height:12px"><a href="#' + b + '"><div style="width:40px;height:12px;border:1px solid #fff;background:' + b + ';display:inline-block"></div> Level ' + (x++) + ' (' + sigInst.clusters[b].length + ' members)</a></div>');
+    }
+
     $GP.cluster.content(a.join(""));
     b = {
         minWidth: 400,

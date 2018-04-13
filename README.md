@@ -10,18 +10,20 @@ SEMhub проект
 
 
 
-### todo list
+### todo
 - ~Спарсить БД от топ10~
 - ~Экспортнуть в файл (DOT https://gephi.org/users/supported-graph-formats/graphviz-dot-format/)~
 - Распасовать в gephi
 - ~Полные названия~
-- Отрисовать на sigmajs (10к вершин максимум)
-- Кириллица
+- ~Отрисовать на sigmajs (10к вершин максимум)~
+- ~Кириллица~
 - Легенда цветов
-- Ссылка на видео
 - Описание
+- Кнопки лайков
 - Вверстать в семраш шаблон (ссылка на регистрацию)
-- Галка сокрытия лейблов
+- Ссылка на видео
+- Встроенное видео ?
+- Галка сокрытия лейблов ?
 - ~Деплой в GCP~ 
 
 
@@ -35,9 +37,10 @@ $ ./export_dot.py -d 4
 $ ./export_dot.py -d 5
 $ ./export_dot.py -d 6
 $ ./export_dot.py -d 7
+
 $ gephi step and export to sigma
 
-$ ./prepare_gephi_data.py
+$ ./post_process.py
 
 $ fab deploy_map
 ```
