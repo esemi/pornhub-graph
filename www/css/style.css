@@ -127,6 +127,13 @@ width: 151px;
 float: left;
 }
 
+.membership {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 15em;
+}
+
 #attributepane .nodeattributes {
 	display:block;
 	height:85%;

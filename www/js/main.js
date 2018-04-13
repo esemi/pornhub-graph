@@ -576,7 +576,7 @@ function nodeActive(a) {
         } else {
         	$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
         }
-        // Image field for attribute pane
+
         $GP.info_data.html(e.join("<br/>"))
     }
     $GP.info_data.show();
