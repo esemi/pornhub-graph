@@ -17,6 +17,9 @@
     "colorLabel": "level",
     "nodeLabel": "video"
   },
+  "custom": {
+    "nodeAttributeFilter": ["level", "Weighted Out-Degree", "Weighted In-Degree"]
+  },
   "features": {
     "search": true,
     "groupSelectorAttribute": "level",
