@@ -507,6 +507,9 @@ function nodeActive(a) {
     f = b.attr;
     if (f.attributes) {
         e = [];
+        var h = '<span><a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank">see on pornhub</a></span><br/>';
+        e.push(h);
+
         for (var attr in f.attributes) {
             if (config.custom.nodeAttributeFilter.indexOf(attr) > -1) {
                 var h = '<span><strong>' + attr + ':</strong> ' + f.attributes[attr] + '</span><br/>';

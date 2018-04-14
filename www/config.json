@@ -25,17 +25,13 @@
     "groupSelectorAttribute": "level",
     "hoverBehavior": "default"
   },
-  "informationPanel": {
-    "groupByEdgeDirection": true,
-    "imageAttribute": false
-  },
   "sigma": {
     "drawingProperties": {
       "defaultEdgeType": "curve",
       "defaultHoverLabelBGColor": "#002147",
       "defaultLabelBGColor": "#ddd",
       "activeFontStyle": "bold",
-      "defaultLabelColor": "#000",
+      "defaultLabelColor": "#acabab",
       "labelThreshold": 10,
       "defaultLabelHoverColor": "#fff",
       "fontStyle": "bold",
