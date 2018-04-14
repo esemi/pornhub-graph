@@ -180,17 +180,16 @@ font-size:14px;
 }
 
 .left-close {
-background-image: url('../images/fancybox_sprite.png');
-margin-left:-37px;
-z-index:99999;
-cursor: pointer;
-padding-left:31px;
-line-height:36px;
-background-repeat: no-repeat;
-margin-bottom:25px;
-font-weight: bold;
-font-size:14px;
-
+    background-image: url('../images/fancybox_sprite.png');
+    margin-left:-37px;
+    z-index:99999;
+    cursor: pointer;
+    padding-left:31px;
+    line-height:36px;
+    background-repeat: no-repeat;
+    margin-bottom:6px;
+    font-weight: bold;
+    font-size:14px;
 }
 
 #developercontainer {
