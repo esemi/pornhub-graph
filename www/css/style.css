@@ -155,13 +155,13 @@ font-weight:bold;
 }
 
 #attributepane .data .plus {
-background-repeat: no-repeat;
-background-image: url('../images/sprite.png');
-background-position: -171px -122px;
-width: 22px;
-height: 20px;
-float: left;
-display: block;
+    background-repeat: no-repeat;
+    background-image: url('../images/sprite.png');
+    background-position: -171px -122px;
+    width: 22px;
+    height: 20px;
+    float: left;
+    display: block;
 }
 
 #attributepane .link {
@@ -266,6 +266,32 @@ font-weight: bold;
 
 #titletext {
 padding: 6px 0 10px 0;
+}
+
+#social {
+    width: 100px;
+    text-align: left;
+    margin:0 auto;
+	position: fixed;
+	bottom: 0px;
+	left: 25px;
+	z-index:0;
+}
+
+#social .count {
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 100;
+    width: 80px;
+    vertical-align: text-top;
+}
+
+#social .logo {
+    padding: 13px 15px;
+    background: #474d59;
+    display: inline-block;
+    border-bottom: 1px solid #7f838b;
+    margin-right: 10px;
 }
 
 #info {
