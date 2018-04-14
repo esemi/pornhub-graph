@@ -121,23 +121,6 @@ function initSigma(config) {
 
 function setupGUI(config) {
 	// Initialise main interface elements
-	var logo=""; // Logo elements
-	if (config.logo.file) {
-
-		logo = "<img src=\"" + config.logo.file +"\"";
-		if (config.logo.text) logo+=" alt=\"" + config.logo.text + "\"";
-		logo+=">";
-	} else if (config.logo.text) {
-		logo="<h1>"+config.logo.text+"</h1>";
-	}
-	if (config.logo.link) logo="<a href=\"" + config.logo.link + "\">"+logo+"</a>";
-	$("#maintitle").html(logo);
-
-	// #title
-	$("#title").html("<h2>"+config.text.title+"</h2>");
-
-	// #titletext
-	$("#titletext").html(config.text.intro);
 
 	// More information
 	if (config.text.more) {
@@ -278,7 +261,7 @@ function configSigmaElements(config) {
     let sorted_keys = Object.keys(sigInst.clusters).sort((x, y)=>sigInst.clusters[x].length - sigInst.clusters[y].length)
 
     var a = [],
-        b,x=1;
+        b,x=0;
     for (b of sorted_keys) {
         a.push('<div style="line-height:12px"><a href="#' + b + '"><div style="width:40px;height:12px;border:1px solid #fff;background:' + b + ';display:inline-block"></div> Level ' + (x++) + ' (' + sigInst.clusters[b].length + ' videos)</a></div>');
     }
