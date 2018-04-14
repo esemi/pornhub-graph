@@ -37,7 +37,7 @@ html,body {
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: #eee;
+	background-color: #000;
 	background-position: center center;
 	background-repeat: no-repeat;
 	-webkit-touch-callout: none;
@@ -241,8 +241,9 @@ display: none;
 margin-top: 50px;
 margin-left: 25px;
 background:#fff;
-background-color:rgba(255,255,255,0.8);
-border:1px solid #ccc;
+background-color: #1b1b1b;
+border: 1px solid #242424;
+color: #f90;
 z-index:20;
 position:fixed;
 top:0;
@@ -273,7 +274,7 @@ padding: 6px 0 10px 0;
 
 
 #search {
-	border-top: 1px solid #999;
+	border-top: 1px solid #555;
 	padding: 20px 0 0px 2px;
 }
 
@@ -415,7 +416,7 @@ background-image: url('../images/sprite.png');
 
 #legend dd {
 margin-bottom: 8px;
-color: #000;
+color: #acabab;
 }
 
 #mainpanel .infos dd {
