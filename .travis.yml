@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.6"
+install:
+  pip install Fabric3
+script:
+  fab tests
+deploy:
+  # deploy master to production
+  provider: script
+  script: fab -H 159.65.200.222 deploy_map -p $SSH_PASS
+  on:
+    branch: master
