@@ -24,7 +24,7 @@ async def main(depth: int):
 
     cnt = Counter()
     with open('data/export_graph_%d.dot' % depth, mode='w+') as output_file:
-        output_file.write("digraph SEMhub_level_%d {\n" % depth)
+        output_file.write("digraph pornGraph_level_%d {\n" % depth)
         for node in parsed_nodes:
             cnt['nodes'] += 1
             title_prepared = cleanup_title(node['title'])

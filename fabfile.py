@@ -8,21 +8,21 @@ from fabric.api import cd, env, run, local, lcd, put
 from fabric.contrib.files import exists
 
 
-env.user = 'esemi'
+SERVICE_NAME = 'porngraph'
+env.user = SERVICE_NAME
 env.app_env = 'default'
-env.hosts = ['35.204.15.134']
 
 BUILD_FILENAME = 'build.tar.gz'
-BUILD_FOLDERS = ['data', 'www']
+BUILD_FOLDERS = ['www']
 BUILD_FILES = []
 LOCAL_APP_PATH = os.path.dirname(__file__)
 LOCAL_BUILD_PATH = os.path.join(LOCAL_APP_PATH, 'build')
 LOCAL_BUILD_BUNDLE = os.path.join(LOCAL_APP_PATH, BUILD_FILENAME)
 
 REMOTE_HOME_PATH = os.path.join('/home', env.user)
-APP_PATH = os.path.join(REMOTE_HOME_PATH, 'semhub')
-DEPLOY_PATH = os.path.join(REMOTE_HOME_PATH, 'semhub-deploy')
-BACKUP_PATH = os.path.join(REMOTE_HOME_PATH, 'semhub-backup')
+APP_PATH = os.path.join(REMOTE_HOME_PATH, SERVICE_NAME)
+DEPLOY_PATH = os.path.join(REMOTE_HOME_PATH, '%s-deploy' % SERVICE_NAME)
+BACKUP_PATH = os.path.join(REMOTE_HOME_PATH, '%s-backup' % SERVICE_NAME)
 
 
 def deploy_map():
@@ -54,11 +54,12 @@ def deploy_map():
 
     with cd(DEPLOY_PATH):
         run('tar -xzf %s' % BUILD_FILENAME)
+        run('rm -rf %s' % BUILD_FILENAME)
 
     # deploy (move build to production)
     if exists(BACKUP_PATH):
         run('rm -rf %s' % BACKUP_PATH)
+
+    run('chgrp -R www-data %s' % DEPLOY_PATH)
     run('mv %s %s' % (APP_PATH, BACKUP_PATH))
     run('mv %s %s' % (DEPLOY_PATH, APP_PATH))
-    run('chown -R %s:www-data %s' % (env.user, APP_PATH))
-    run('chmod -R 755 %s' % APP_PATH)
