@@ -25,6 +25,11 @@ DEPLOY_PATH = os.path.join(REMOTE_HOME_PATH, '%s-deploy' % SERVICE_NAME)
 BACKUP_PATH = os.path.join(REMOTE_HOME_PATH, '%s-backup' % SERVICE_NAME)
 
 
+def tests():
+    # todo?
+    pass
+
+
 def deploy_map():
     """
     Deploy www node with static map only
