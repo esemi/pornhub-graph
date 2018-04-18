@@ -13,7 +13,7 @@ SEMhub проект
 ### todo
 - ~Спарсить БД от топ10~
 - ~Экспортнуть в файл (DOT https://gephi.org/users/supported-graph-formats/graphviz-dot-format/)~
-- Распасовать в gephi
+- ~Распасовать в gephi~
 - ~Полные названия~
 - ~Отрисовать на sigmajs (10к вершин максимум)~
 - ~Легенда цветов~
