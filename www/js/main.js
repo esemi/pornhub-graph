@@ -92,6 +92,7 @@ function setupGUI(config) {
     $GP.info = $("#attributepane");
     $GP.info_donnees = $GP.info.find(".nodeattributes");
     $GP.info_name = $GP.info.find(".name");
+    $GP.info_preview = $GP.info.find(".preview");
     $GP.info_link = $GP.info.find(".link");
     $GP.info_data = $GP.info.find(".data");
     $GP.info_close = $GP.info.find(".returntext");
@@ -328,6 +329,8 @@ function nodeActive(a) {
     });
     f = b.attr;
     if (f.attributes) {
+        loadVideoPreview(f.attributes['hash']);
+
         e = [];
         var h = '<span><a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank">see on pornhub</a></span><br/>';
         e.push(h);
@@ -383,3 +386,12 @@ function showCluster(a) {
 }
 
 
+function loadVideoPreview(hash) {
+    // todo load.gif
+    // todo error catch
+    // todo cache to local storage
+    jQuery.getJSON("https://www.pornhub.com/webmasters/video_by_id?id=" + hash + "&thumbsize=medium_hd",
+        function(data, textStatus, jqXHR) {
+            $GP.info_preview.html('<img src="' + data['video']['default_thumb'] + '"></img>')
+        });
+};
