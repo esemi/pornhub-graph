@@ -35,18 +35,11 @@ pornGraph
 
 
 ```bash
-$ ./run_crawler_from_top.py --reset -c2 -i1 10
-$ nohup ./run_crawler_from_top.py --continue -c2 -i100 10 > log.log 2>&1 &
+$ nohup ./backend/run_crawler_from_top.py --continue -c2 -i100 10
 
-$ ./export_dot.py -d 3
-$ ./export_dot.py -d 4
-$ ./export_dot.py -d 5
-$ ./export_dot.py -d 6
-$ ./export_dot.py -d 7
+$ ./backend/export_dot.py -d 5
 
 $ gephi handjob and export w/ sigmajs plugin
 
-$ ./post_process.py
-
-$ fab deploy_map
+$ ./backend/post_process.py
 ```

@@ -6,7 +6,7 @@ import logging
 import re
 from collections import Counter
 
-from src.storage import S
+from storage import S
 
 
 def cleanup_title(title: str) -> str:
