@@ -166,12 +166,6 @@ function setupGUI(config) {
     $GP.info_close2.click(nodeNormal);
     $GP.form = $("#mainpanel").find("form");
     $GP.search = new Search($GP.form.find("#search"));
-    if (!config.features.search) {
-		$("#search").hide();
-	}
-	if (!config.features.groupSelectorAttribute) {
-		$("#attributeselect").hide();
-	}
     $GP.cluster = new Cluster($GP.form.find("#attributeselect"));
     config.GP=$GP;
     initSigma(config);
@@ -369,16 +363,10 @@ function Search(a) {
 
 function Cluster(a) {
     this.cluster = a;
-    this.display = !1;
+    this.display = !0;
     this.list = this.cluster.find(".list");
     this.list.empty();
-    this.select = this.cluster.find(".select");
-    this.select.click(function () {
-        $GP.cluster.toggle()
-    });
-    this.toggle = function () {
-        this.display ? this.hide() : this.show()
-    };
+
     this.content = function (a) {
         this.list.html(a);
         this.list.find("a").click(function () {
@@ -386,16 +374,8 @@ function Cluster(a) {
             showCluster(a)
         })
     };
-    this.hide = function () {
-        this.display = !1;
-        this.list.hide();
-        this.select.removeClass("close")
-    };
-    this.show = function () {
-        this.display = !0;
-        this.list.show();
-        this.select.addClass("close")
-    }
+
+    this.list.show();
 }
 
 function showGroups(a) {
@@ -403,7 +383,7 @@ function showGroups(a) {
 }
 
 function nodeNormal() {
-    !0 != $GP.calculating && !1 != sigInst.detail && (showGroups(!1), $GP.calculating = !0, sigInst.detail = !0, $GP.info.delay(400).animate({width:'hide'},350),$GP.cluster.hide(), sigInst.iterEdges(function (a) {
+    !0 != $GP.calculating && !1 != sigInst.detail && (showGroups(!1), $GP.calculating = !0, sigInst.detail = !0, $GP.info.delay(400).animate({width:'hide'},350), sigInst.iterEdges(function (a) {
         a.attr.color = !1;
         a.hidden = !1
     }), sigInst.iterNodes(function (a) {
@@ -556,7 +536,6 @@ function showCluster(a) {
         $GP.info_link.find("ul").html(f.join(""));
         $GP.info.animate({width:'show'},350);
         $GP.search.clean();
-		$GP.cluster.hide();
         return !0
     }
     return !1
