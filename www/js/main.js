@@ -39,41 +39,12 @@ Object.size = function(obj) {
 function initSigma(config) {
 	var data=config.data
 	
-	var drawProps, graphProps,mouseProps;
-	if (config.sigma && config.sigma.drawingProperties) 
-		drawProps=config.sigma.drawingProperties;
-	else
-		drawProps={
-        defaultLabelColor: "#000",
-        defaultLabelSize: 14,
-        defaultLabelBGColor: "#ddd",
-        defaultHoverLabelBGColor: "#002147",
-        defaultLabelHoverColor: "#fff",
-        labelThreshold: 10,
-        defaultEdgeType: "curve",
-        hoverFontStyle: "bold",
-        fontStyle: "bold",
-        activeFontStyle: "bold"
-    };
-    
-    if (config.sigma && config.sigma.graphProperties)	
-    	graphProps=config.sigma.graphProperties;
-    else
-    	graphProps={
-        minNodeSize: 1,
-        maxNodeSize: 7,
-        minEdgeSize: 0.2,
-        maxEdgeSize: 0.5
-    	};
-	
-	if (config.sigma && config.sigma.mouseProperties) 
-		mouseProps=config.sigma.mouseProperties;
-	else
-		mouseProps={
-        minRatio: 0.75, // How far can we zoom out?
-        maxRatio: 20, // How far can we zoom in?
-    	};
-	
+    var drawProps, graphProps,mouseProps;
+
+    drawProps=config.sigma.drawingProperties;
+    graphProps=config.sigma.graphProperties;
+    mouseProps=config.sigma.mouseProperties;
+
     var a = sigma.init(document.getElementById("sigma-canvas")).drawingProperties(drawProps).graphProperties(graphProps).mouseProperties(mouseProps);
     sigInst = a;
     a.active = !1;
@@ -115,16 +86,6 @@ function initSigma(config) {
 function setupGUI(config) {
 	// Initialise main interface elements
 
-	// More information
-	if (config.text.more) {
-		$("#information").html(config.text.more);
-	} else {
-		//hide more information link
-		$("#moreinformation").hide();
-	}
-
-	// Legend
-
 	// Node
 	if (config.legend.nodeLabel) {
 		$(".node").next().html(config.legend.nodeLabel);
@@ -160,10 +121,8 @@ function setupGUI(config) {
     $GP.info_link = $GP.info.find(".link");
     $GP.info_data = $GP.info.find(".data");
     $GP.info_close = $GP.info.find(".returntext");
-    $GP.info_close2 = $GP.info.find(".close");
     $GP.info_p = $GP.info.find(".p");
     $GP.info_close.click(nodeNormal);
-    $GP.info_close2.click(nodeNormal);
     $GP.form = $("#mainpanel").find("form");
     $GP.search = new Search($GP.form.find("#search"));
     $GP.cluster = new Cluster($GP.form.find("#attributeselect"));
@@ -173,76 +132,7 @@ function setupGUI(config) {
 
 function configSigmaElements(config) {
 	$GP=config.GP;
-    
-    // Node hover behaviour
-    if (config.features.hoverBehavior == "dim") {
 
-		var greyColor = '#ccc';
-		sigInst.bind('overnodes',function(event){
-		var nodes = event.content;
-		var neighbors = {};
-		sigInst.iterEdges(function(e){
-		if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
-			if(!e.attr['grey']){
-				e.attr['true_color'] = e.color;
-				e.color = greyColor;
-				e.attr['grey'] = 1;
-			}
-		}else{
-			e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
-			e.attr['grey'] = 0;
-
-			neighbors[e.source] = 1;
-			neighbors[e.target] = 1;
-		}
-		}).iterNodes(function(n){
-			if(!neighbors[n.id]){
-				if(!n.attr['grey']){
-					n.attr['true_color'] = n.color;
-					n.color = greyColor;
-					n.attr['grey'] = 1;
-				}
-			}else{
-				n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
-				n.attr['grey'] = 0;
-			}
-		}).draw(2,2,2);
-		}).bind('outnodes',function(){
-		sigInst.iterEdges(function(e){
-			e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
-			e.attr['grey'] = 0;
-		}).iterNodes(function(n){
-			n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
-			n.attr['grey'] = 0;
-		}).draw(2,2,2);
-		});
-
-    } else if (config.features.hoverBehavior == "hide") {
-
-		sigInst.bind('overnodes',function(event){
-			var nodes = event.content;
-			var neighbors = {};
-		sigInst.iterEdges(function(e){
-			if(nodes.indexOf(e.source)>=0 || nodes.indexOf(e.target)>=0){
-		    	neighbors[e.source] = 1;
-		    	neighbors[e.target] = 1;
-		  	}
-		}).iterNodes(function(n){
-		  	if(!neighbors[n.id]){
-		    	n.hidden = 1;
-		  	}else{
-		    	n.hidden = 0;
-		  }
-		}).draw(2,2,2);
-		}).bind('outnodes',function(){
-		sigInst.iterEdges(function(e){
-		  	e.hidden = 0;
-		}).iterNodes(function(n){
-		  	n.hidden = 0;
-		}).draw(2,2,2);
-		});
-
-    }
     $GP.bg = $(sigInst._core.domElements.bg);
     $GP.bg2 = $(sigInst._core.domElements.bg2);
     let sorted_keys = Object.keys(sigInst.clusters).sort((x, y)=>sigInst.clusters[x].length - sigInst.clusters[y].length)
