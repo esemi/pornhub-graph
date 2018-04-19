@@ -10,7 +10,7 @@ import time
 from pyppeteer import launch
 from pyppeteer.element_handle import ElementHandle
 
-from src.storage import S
+from storage import S
 
 TIMEOUT = 25
 URL_TEMPLATE = 'https://www.pornhub.com/view_video.php?viewkey=%s'

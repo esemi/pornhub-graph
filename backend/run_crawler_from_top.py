@@ -4,9 +4,9 @@
 import asyncio
 import logging
 
-from src.crawler import run
-from src.storage import S
-from src.utils import fetch_current_top, get_default_arg_parser
+from crawler import run
+from storage import S
+from utils import fetch_current_top, get_default_arg_parser
 
 
 async def main(top_limit: int, reset: bool=False, continue_mode: bool=False, **kwargs):
