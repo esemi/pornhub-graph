@@ -84,37 +84,11 @@ function initSigma(config) {
 
 
 function setupGUI(config) {
-	// Initialise main interface elements
-
-	// Node
-	if (config.legend.nodeLabel) {
-		$(".node").next().html(config.legend.nodeLabel);
-	} else {
-		//hide more information link
-		$(".node").hide();
-	}
-	// Edge
-	if (config.legend.edgeLabel) {
-		$(".edge").next().html(config.legend.edgeLabel);
-	} else {
-		//hide more information link
-		$(".edge").hide();
-	}
-	// Colours
-	if (config.legend.nodeLabel) {
-		$(".colours").next().html(config.legend.colorLabel);
-	} else {
-		//hide more information link
-		$(".colours").hide();
-	}
-
 	$GP = {
 		calculating: !1,
 		showgroup: !1
 	};
     $GP.intro = $("#intro");
-    $GP.minifier = $GP.intro.find("#minifier");
-    $GP.mini = $("#minify");
     $GP.info = $("#attributepane");
     $GP.info_donnees = $GP.info.find(".nodeattributes");
     $GP.info_name = $GP.info.find(".name");
@@ -123,18 +97,14 @@ function setupGUI(config) {
     $GP.info_close = $GP.info.find(".returntext");
     $GP.info_p = $GP.info.find(".p");
     $GP.info_close.click(nodeNormal);
-    $GP.form = $("#mainpanel").find("form");
-    $GP.search = new Search($GP.form.find("#search"));
-    $GP.cluster = new Cluster($GP.form.find("#attributeselect"));
+    $GP.search = new Search($("#search"));
+    $GP.cluster = new Cluster($("#attributeselect"));
     config.GP=$GP;
     initSigma(config);
 }
 
 function configSigmaElements(config) {
 	$GP=config.GP;
-
-    $GP.bg = $(sigInst._core.domElements.bg);
-    $GP.bg2 = $(sigInst._core.domElements.bg2);
     let sorted_keys = Object.keys(sigInst.clusters).sort((x, y)=>sigInst.clusters[x].length - sigInst.clusters[y].length)
 
     var a = [],
@@ -148,7 +118,7 @@ function configSigmaElements(config) {
         minWidth: 400,
         maxWidth: 800,
         maxHeight: 600
-    };//        minHeight: 300,
+    };
     $("a.fb").fancybox(b);
     $("#zoom").find("div.z").each(function () {
         var a = $(this),
@@ -163,30 +133,17 @@ function configSigmaElements(config) {
 
         })
     });
-    $GP.mini.click(function () {
-        $GP.mini.hide();
-        $GP.intro.show();
-        $GP.minifier.show()
-    });
-    $GP.minifier.click(function () {
-        $GP.intro.hide();
-        $GP.minifier.hide();
-        $GP.mini.show()
-    });
-    $GP.intro.find("#showGroups").click(function () {
-        !0 == $GP.showgroup ? showGroups(!1) : showGroups(!0)
-    });
+
     a = window.location.hash.substr(1);
-    if (0 < a.length) switch (a) {
-    case "Groups":
-        showGroups(!0);
-        break;
-    case "information":
-        $.fancybox.open($("#information"), b);
-        break;
-    default:
-        $GP.search.exactMatch = !0, $GP.search.search(a)
-        $GP.search.clean();
+    if (0 < a.length) {
+        switch (a) {
+            case "information":
+                $.fancybox.open($("#information"), b);
+                break;
+            default:
+                $GP.search.exactMatch = !0, $GP.search.search(a)
+                $GP.search.clean();
+        }
     }
 
 }
@@ -268,12 +225,8 @@ function Cluster(a) {
     this.list.show();
 }
 
-function showGroups(a) {
-    a ? ($GP.intro.find("#showGroups").text("Hide groups"), $GP.bg.show(), $GP.bg2.hide(), $GP.showgroup = !0) : ($GP.intro.find("#showGroups").text("View Groups"), $GP.bg.hide(), $GP.bg2.show(), $GP.showgroup = !1)
-}
-
 function nodeNormal() {
-    !0 != $GP.calculating && !1 != sigInst.detail && (showGroups(!1), $GP.calculating = !0, sigInst.detail = !0, $GP.info.delay(400).animate({width:'hide'},350), sigInst.iterEdges(function (a) {
+    !0 != $GP.calculating && !1 != sigInst.detail && ($GP.calculating = !0, sigInst.detail = !0, $GP.info.delay(400).animate({width:'hide'},350), sigInst.iterEdges(function (a) {
         a.attr.color = !1;
         a.hidden = !1
     }), sigInst.iterNodes(function (a) {
@@ -288,7 +241,6 @@ function nodeActive(a) {
     sigInst.neighbors = {};
     sigInst.detail = !0;
     var b = sigInst._core.graph.nodesIndex[a];
-    showGroups(!1);
 	var outgoing={},incoming={},mutual={};//SAH
     sigInst.iterEdges(function (b) {
         b.attr.lineWidth = !1;
@@ -403,7 +355,6 @@ function nodeActive(a) {
 function showCluster(a) {
     var b = sigInst.clusters[a];
     if (b && 0 < b.length) {
-        showGroups(!1);
         sigInst.detail = !0;
         b.sort();
         sigInst.iterEdges(function (a) {

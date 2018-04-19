@@ -2,11 +2,6 @@
   "type": "network",
   "version": "1.0",
   "data": "data-prepared.json",
-  "legend": {
-    "edgeLabel": "related",
-    "colorLabel": "depth level from root",
-    "nodeLabel": "video"
-  },
   "custom": {
     "nodeAttributeFilter": ["level", "Weighted Out-Degree", "Weighted In-Degree"]
   },
