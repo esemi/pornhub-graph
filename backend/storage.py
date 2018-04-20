@@ -28,11 +28,18 @@ class Storage:
     async def mark_video_as_parsed_fail(self, video_hash: str):
         await self.videos.update_one({'_id': video_hash}, {'$inc': {'parse_try': 1}})
 
+    async def update_preview_img(self, video_hash: str, url: str):
+        await self.videos.update_one({'_id': video_hash}, {'$set': {'img_src': url}})
+
     async def get_videos_for_parsing(self, limit: int, max_tries: int) -> list:
         return list(map(lambda x: (x['_id'], x['level']),
                         await self.videos.find({'parsed': False, 'parse_try': {'$lt': max_tries}},
                                                projection=['_id', 'level'],
                                                limit=limit).sort('level', pymongo.ASCENDING).to_list(None)))
+
+    async def get_videos_for_fetch_additional_info(self) -> list:
+        return list(map(lambda x: x['_id'], await self.videos.find({'parsed': True, 'img_src': None},
+                                                                   projection=['_id']).sort('level', pymongo.ASCENDING).to_list(None)))
 
     async def add_video_hash(self, video_hash: str, level: int=0) -> bool:
         try:

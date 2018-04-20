@@ -23,13 +23,15 @@ async def main(depth: int):
     logging.info('found %d valid unique nodes', len(valid_nodes))
 
     cnt = Counter()
-    with open('data/export_graph_%d.dot' % depth, mode='w+') as output_file:
+    with open('../data/export_graph_%d.dot' % depth, mode='w+') as output_file:
         output_file.write("digraph pornGraph_level_%d {\n" % depth)
         for node in parsed_nodes:
             cnt['nodes'] += 1
             title_prepared = cleanup_title(node['title'])
-            output_file.write("\t%s [label=\"%s\",level=%d,hash=%s]\n" % (node['_id'], title_prepared, node['level'],
-                                                                          node['_id']))
+            img_src = '' if 'img_src' not in node or not node['img_src'] else node['img_src']
+            output_file.write("\t%s [label=\"%s\",level=%d,hash=%s,img_src=\"%s\"]\n" % (node['_id'], title_prepared,
+                                                                                         node['level'], node['_id'],
+                                                                                         img_src))
             for edge in node['rel']:
                 cnt['edges_total'] += 1
                 if edge in valid_nodes:
