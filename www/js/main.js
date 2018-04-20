@@ -329,7 +329,11 @@ function nodeActive(a) {
     });
     f = b.attr;
     if (f.attributes) {
-        loadVideoPreview(f.attributes['hash']);
+        var img_src = '/images/preview_not_found.png';
+        if (f.attributes['img_src']) {
+            img_src = f.attributes['img_src'];
+        }
+        $GP.info_preview.html('<img src="' + img_src + '"></img>');
 
         e = [];
         var h = '<span><a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank">see on pornhub</a></span><br/>';
@@ -384,14 +388,3 @@ function showCluster(a) {
     }
     return !1
 }
-
-
-function loadVideoPreview(hash) {
-    // todo load.gif
-    // todo error catch
-    // todo cache to local storage
-    jQuery.getJSON("https://www.pornhub.com/webmasters/video_by_id?id=" + hash + "&thumbsize=medium_hd",
-        function(data, textStatus, jqXHR) {
-            $GP.info_preview.html('<img src="' + data['video']['default_thumb'] + '"></img>')
-        });
-};
