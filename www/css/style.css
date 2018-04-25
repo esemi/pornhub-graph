@@ -588,3 +588,7 @@ display: none;
         animation:octocat-wave 560ms ease-in-out;
     }
 }
+
+div .preview img {
+    width: 215px;
+}
