@@ -5,7 +5,7 @@ import motor.motor_asyncio
 
 MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
-MONGO_DB = 'semhub'
+MONGO_DB = 'porngraph'
 
 
 class Storage:
