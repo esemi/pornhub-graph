@@ -78,7 +78,7 @@ canvas#sigma_bg_1 {
 	background-color:rgba(21,21,21,0.8);
 	border-left: 1px solid #292929;
 	padding: 0px 18px 0px 18px;
-    color:#665;
+    color:#acabab;
 	
 }
 
@@ -165,7 +165,7 @@ font-weight:bold;
 }
 
 #attributepane .data {
-
+	color: #665;
 }
 
 #attributepane .data .plus {
@@ -405,7 +405,7 @@ color: #fff;
     display:block;
     padding: 4px 7px;
     text-decoration: none;
-    color: #fff;
+    color: ##acabab;
 	border: 1px solid transparent;
     border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -417,7 +417,7 @@ color: #fff;
 #attributeselect .list a:hover {
     background-color: #191919;
     border: 1px solid #252525;
-    color: #000;
+    color: #fff;
 }
 
 .link h2 {
@@ -491,7 +491,7 @@ color: #fff;
 	margin:0 auto;	
 	position: fixed;
 	right: 40px;
-	bottom: 25px;
+	bottom: 17px;
 	z-index:0;
 }
 
@@ -537,7 +537,6 @@ color: #fff;
 }
 
 #zoom .z:hover {
-	background: #3f3f3f;
 	background-color:rgba(63,63,63,0.7);
 }
 
