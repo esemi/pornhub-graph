@@ -403,13 +403,20 @@ color: #fff;
 
 #attributeselect .list a {
     display:block;
-    padding: 5px 8px;
+    padding: 4px 7px;
     text-decoration: none;
     color: #fff;
+	border: 1px solid transparent;
+    border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
 }
 
 #attributeselect .list a:hover {
-    background-color: #fff;
+    background-color: #191919;
+    border: 1px solid #252525;
     color: #000;
 }
 
