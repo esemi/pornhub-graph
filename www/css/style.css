@@ -26,6 +26,16 @@ html,body {
 	line-height:1.25em;
 }
 
+a {
+	color: #f90;
+	outline-style: none;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 .sigma-parent {
 	position: relative;
 	height: 100%;
@@ -60,14 +70,16 @@ canvas#sigma_bg_1 {
     bottom:0;
     top:0;
     right:0;
+    z-index: 1;
 	width: 240px;
-	background-color: #fff;
+	background-color: #151515;
 	margin: 0;
 	word-wrap: break-word;
-	background-color:rgba(255,255,255,0.8);
-	border-left: 1px solid #ccc;
-	padding: 0px 18px 0px 18px;	
-	z-index: 1;
+	background-color:rgba(21,21,21,0.8);
+	border-left: 1px solid #292929;
+	padding: 0px 18px 0px 18px;
+    color:#665;
+	
 }
 
 
@@ -148,6 +160,7 @@ cursor: default;
 padding-bottom: 10px;
 padding-top: 18px;
 font-weight:bold;
+	color:#f90;
 }
 
 #attributepane .data {
@@ -177,6 +190,7 @@ cursor:pointer;
 padding-top: 10px;
 font-weight: bold;
 font-size:14px;
+	color: #f90;
 }
 
 .left-close {
@@ -296,11 +310,20 @@ margin-right:10px;
 }
 
 #search input[name=search] {
-    border: 1px solid #999;
-    background-color: #fff;
-    padding: 5px 7px 4px 7px;
     width: 205px;
-    color: #000;
+    height: 22px;
+    padding: 2px 5px;
+    border: 1px solid #999;
+    border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;	
+    font-size: 14px;
+    outline: 0;
+    vertical-align: top;
+    background-color: #363636;     
+    color: #cacaca;
 }
 
 #search input.empty {
