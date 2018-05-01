@@ -111,7 +111,7 @@ function configSigmaElements(config) {
     var a = [],
         b,x=0;
     for (b of sorted_keys) {
-        a.push('<div style="line-height:12px"><a href="#' + b + '"><div style="width:40px;height:12px;border:1px solid #fff;background:' + b + ';display:inline-block"></div> Level ' + (x++) + ' (' + sigInst.clusters[b].length + ' videos)</a></div>');
+        a.push('<div style="line-height:12px"><a href="#' + b + '"><div style="width:40px;height:12px;border:1px solid #1b1b1b;background:' + b + ';display:inline-block"></div> Level ' + (x++) + ' (' + sigInst.clusters[b].length + ' videos)</a></div>');
     }
 
     $GP.cluster.content(a.join(""));
