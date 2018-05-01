@@ -144,6 +144,7 @@ float: left;
     overflow: hidden;
     white-space: nowrap;
     width: 15em;
+	color: #f90;
 }
 
 #attributepane .nodeattributes {
@@ -305,15 +306,16 @@ margin-right:10px;
 
 
 #search {
+	position: relative;
 	border-top: 1px solid #555;
 	padding: 20px 0 0px 2px;
 }
 
 #search input[name=search] {
-    width: 205px;
+    width: 230px;
     height: 22px;
     padding: 2px 5px;
-    border: 1px solid #999;
+    border: none;
     border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -331,6 +333,11 @@ margin-right:10px;
 }
 
 #search .state {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
     width: 14px;
     height: 14px;
     background-image: url('../images/sprite.png');
@@ -350,6 +357,15 @@ margin-right:10px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	max-height: 400px;
+	
+	border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		-ms-border-radius: 3px;
+		-o-border-radius: 3px;
+
+	background: #e3e1e1;
+	padding: 5px 0;
 }
 
 #search .results b {
@@ -380,15 +396,14 @@ color: #fff;
 }
 
 #attributeselect .list {
-	padding: 6px;
-	width: 200px;
+	width: 240px;
 	overflow-x: hidden;
 	color: white;
 }
 
 #attributeselect .list a {
     display:block;
-    padding: 2px;
+    padding: 5px 8px;
     text-decoration: none;
     color: #fff;
 }
@@ -414,6 +429,9 @@ color: #fff;
     float: left;
     background-repeat: no-repeat;
     background-image: url('../images/sprite.png');
+}
+#legend {
+	margin-top: 21px;
 }
 
 #legend dl {
@@ -458,6 +476,9 @@ color: #fff;
     background-repeat: no-repeat;
     margin-left: 5px;
 }
+#mainpanel h2 {
+	margin-bottom: 12px;
+}
 
 #copyright {
 	margin:0 auto;	
@@ -492,15 +513,25 @@ color: #fff;
 }
 
 #zoom .z {
-	background:#fff;
-	background-color:rgba(255,255,255,0.7);
+	background:#1f1f1f;
+	background-color:rgba(31,31,31,0.7);
 	width: 60px;
 	height: 60px;
 	cursor: pointer;
-	border:1px solid #ccc;
+	border: none;
 	float:left;
-	margin-right:4px;
+	margin-right:8px;
 	background-repeat:no-repeat;
+	border-radius: 4px;
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		-ms-border-radius: 4px;
+		-o-border-radius: 4px;
+}
+
+#zoom .z:hover {
+	background: #3f3f3f;
+	background-color:rgba(63,63,63,0.7);
 }
 
 #zoom .z[rel=center] {
