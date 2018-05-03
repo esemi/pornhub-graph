@@ -351,6 +351,7 @@ function nodeActive(a) {
         $GP.info_data.html(e.join("<br/>"))
     }
     $GP.info_data.show();
+    $GP.info_preview.show();
     $GP.info_p.html("Connections:");
     $GP.info.animate({width:'show'},350);
 	$GP.info_donnees.hide();
@@ -380,6 +381,7 @@ function showCluster(a) {
         sigInst.draw(2, 2, 2, 2);
         $GP.info_name.html("<b>" + a + "</b>");
         $GP.info_data.hide();
+        $GP.info_preview.hide();
         $GP.info_p.html("Group Members:");
         $GP.info_link.find("ul").html(f.join(""));
         $GP.info.animate({width:'show'},350);
