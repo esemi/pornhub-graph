@@ -39,7 +39,7 @@ Object.size = function(obj) {
 function initSigma(config) {
 	var data=config.data
 	
-    var drawProps, graphProps,mouseProps;
+    var drawProps, graphProps, mouseProps;
 
     drawProps=config.sigma.drawingProperties;
     graphProps=config.sigma.graphProperties;
@@ -100,6 +100,7 @@ function setupGUI(config) {
     $GP.info_close.click(nodeNormal);
     $GP.search = new Search($("#search"));
     $GP.cluster = new Cluster($("#attributeselect"));
+    $GP.show_illegal = function() {return document.getElementById("show_illegal").checked};
     config.GP=$GP;
     initSigma(config);
 }
@@ -333,7 +334,7 @@ function nodeActive(a) {
         if (f.attributes['img_src']) {
             img_src = f.attributes['img_src'];
         }
-        $GP.info_preview.html('<img src="' + img_src + '"></img>');
+        $GP.info_preview.html('<a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank"><img src="' + img_src + '"></img></a>');
 
         e = [];
         var h = '<span><a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank">see on pornhub</a></span><br/>';
@@ -350,8 +351,13 @@ function nodeActive(a) {
 
         $GP.info_data.html(e.join("<br/>"))
     }
+    console.log($GP.show_illegal());
+    if ($GP.show_illegal()) {
+        $GP.info_preview.show();
+    } else {
+        $GP.info_preview.hide();
+    }
     $GP.info_data.show();
-    $GP.info_preview.show();
     $GP.info_p.html("Connections:");
     $GP.info.animate({width:'show'},350);
 	$GP.info_donnees.hide();
