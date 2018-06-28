@@ -1,9 +1,7 @@
 var sigInst, canvas, $GP
 
-//Load configuration file
 var config={};
 
-//For debug allow a config=file.json parameter to specify the config
 function GetQueryStringParams(sParam,defaultVal) {
     var sPageURL = ""+window.location;//.search.substring(1);//This might be causing error in Safari?
     if (sPageURL.indexOf("?")==-1) return defaultVal;
@@ -21,12 +19,9 @@ function GetQueryStringParams(sParam,defaultVal) {
 
 jQuery.getJSON(GetQueryStringParams("config","config.json"), function(data, textStatus, jqXHR) {
 	config=data;
-	//As soon as page is ready (and data ready) set up it
 	$(document).ready(setupGUI(config));
 });
 
-
-// FUNCTION DECLARATIONS
 
 Object.size = function(obj) {
     var size = 0, key;
@@ -36,6 +31,13 @@ Object.size = function(obj) {
     return size;
 };
 
+
+function resetGraph() {
+    sigInst.position(0,0,1).draw();
+    sigInst.refresh();
+}
+
+
 function initSigma(config) {
 	var data=config.data
 	
@@ -44,7 +46,6 @@ function initSigma(config) {
     drawProps=config.sigma.drawingProperties;
     graphProps=config.sigma.graphProperties;
     mouseProps=config.sigma.mouseProperties;
-
     var a = sigma.init(document.getElementById("sigma-canvas")).drawingProperties(drawProps).graphProperties(graphProps).mouseProperties(mouseProps);
     sigInst = a;
     a.active = !1;
@@ -66,6 +67,10 @@ function initSigma(config) {
 			}
 		
 		);
+
+		a.iterEdges(function (b) {
+		    b.hidden = !$GP.show_edges();
+		});
 	
 		a.bind("upnodes", function (a) {
 		    nodeActive(a.content[0])
@@ -101,9 +106,11 @@ function setupGUI(config) {
     $GP.search = new Search($("#search"));
     $GP.cluster = new Cluster($("#attributeselect"));
     $GP.show_illegal = function() {return document.getElementById("show_illegal").checked};
+    $GP.show_edges = function() {return document.getElementById("show_edges").checked};
     config.GP=$GP;
     initSigma(config);
 }
+
 
 function configSigmaElements(config) {
 	$GP=config.GP;
@@ -127,7 +134,7 @@ function configSigmaElements(config) {
             b = a.attr("rel");
         a.click(function () {
 			if (b == "center") {
-				sigInst.position(0,0,1).draw();
+				resetGraph();
 			} else {
 		        var a = sigInst._core;
 	            sigInst.zoomTo(a.domElements.nodes.width / 2, a.domElements.nodes.height / 2, a.mousecaptor.ratio * ("in" == b ? 1.5 : 0.5));		
@@ -136,19 +143,23 @@ function configSigmaElements(config) {
         })
     });
 
+    $('#show_edges').bind('change', function() {
+        let hide = !$GP.show_edges();
+        console.log(hide);
+		sigInst.iterEdges(function (b) {
+		    b.hidden = hide;
+		});
+		sigInst.draw(2, 2, 2, 2);
+    });
+
     a = window.location.hash.substr(1);
     if (0 < a.length) {
-        switch (a) {
-            case "information":
-                $.fancybox.open($("#information"), b);
-                break;
-            default:
-                $GP.search.exactMatch = !0, $GP.search.search(a)
-                $GP.search.clean();
-        }
+        $GP.search.exactMatch = !0, $GP.search.search(a)
+        $GP.search.clean();
     }
 
 }
+
 
 function Search(a) {
     this.input = a.find("input[name=search]");
@@ -210,6 +221,7 @@ function Search(a) {
     }
 }
 
+
 function Cluster(a) {
     this.cluster = a;
     this.display = !0;
@@ -227,10 +239,11 @@ function Cluster(a) {
     this.list.show();
 }
 
+
 function nodeNormal() {
     !0 != $GP.calculating && !1 != sigInst.detail && ($GP.calculating = !0, sigInst.detail = !0, $GP.info.delay(400).animate({width:'hide'},350), sigInst.iterEdges(function (a) {
         a.attr.color = !1;
-        a.hidden = !1
+        a.hidden = !$GP.show_edges()
     }), sigInst.iterNodes(function (a) {
         a.hidden = !1;
         a.attr.color = !1;
@@ -238,6 +251,7 @@ function nodeNormal() {
         a.attr.size = !1
     }), sigInst.draw(2, 2, 2, 2), sigInst.neighbors = {}, sigInst.active = !1, $GP.calculating = !1, window.location.hash = "")
 }
+
 
 function nodeActive(a) {
     sigInst.neighbors = {};
@@ -256,7 +270,7 @@ function nodeActive(a) {
    	   if (a==b.source) outgoing[b.target]=n;		//SAH
 	   else if (a==b.target) incoming[b.source]=n;		//SAH
        if (a == b.source || a == b.target) sigInst.neighbors[a == b.target ? b.source : b.target] = n;
-       b.hidden = !1, b.attr.color = "rgba(0, 0, 0, 1)";
+       b.hidden = !$GP.show_edges(), b.attr.color = "rgba(0, 0, 0, 1)";
     });
     var f = [];
     sigInst.iterNodes(function (a) {
@@ -351,12 +365,13 @@ function nodeActive(a) {
 
         $GP.info_data.html(e.join("<br/>"))
     }
-    console.log($GP.show_illegal());
+
     if ($GP.show_illegal()) {
         $GP.info_preview.show();
     } else {
         $GP.info_preview.hide();
     }
+
     $GP.info_data.show();
     $GP.info_p.html("Connections:");
     $GP.info.animate({width:'show'},350);
@@ -366,13 +381,14 @@ function nodeActive(a) {
     window.location.hash = b.id;
 }
 
+
 function showCluster(a) {
     var b = sigInst.clusters[a];
     if (b && 0 < b.length) {
         sigInst.detail = !0;
         b.sort();
         sigInst.iterEdges(function (a) {
-            a.hidden = !1;
+            a.hidden = !$GP.show_edges();
             a.attr.lineWidth = !1;
             a.attr.color = !1
         });
