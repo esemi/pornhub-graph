@@ -32,9 +32,8 @@ Object.size = function(obj) {
 };
 
 
-function resetGraph() {
+function resetScale() {
     sigInst.position(0,0,1).draw();
-    sigInst.refresh();
 }
 
 
@@ -134,7 +133,7 @@ function configSigmaElements(config) {
             b = a.attr("rel");
         a.click(function () {
 			if (b == "center") {
-				resetGraph();
+				resetScale();
 			} else {
 		        var a = sigInst._core;
 	            sigInst.zoomTo(a.domElements.nodes.width / 2, a.domElements.nodes.height / 2, a.mousecaptor.ratio * ("in" == b ? 1.5 : 0.5));		
@@ -145,7 +144,6 @@ function configSigmaElements(config) {
 
     $('#show_edges').bind('change', function() {
         let hide = !$GP.show_edges();
-        console.log(hide);
 		sigInst.iterEdges(function (b) {
 		    b.hidden = hide;
 		});
@@ -249,7 +247,7 @@ function nodeNormal() {
         a.attr.color = !1;
         a.attr.lineWidth = !1;
         a.attr.size = !1
-    }), sigInst.draw(2, 2, 2, 2), sigInst.neighbors = {}, sigInst.active = !1, $GP.calculating = !1, window.location.hash = "")
+    }), resetScale(), sigInst.draw(2, 2, 2, 2), sigInst.neighbors = {}, sigInst.active = !1, $GP.calculating = !1, window.location.hash = "")
 }
 
 
