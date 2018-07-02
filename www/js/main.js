@@ -150,12 +150,19 @@ function configSigmaElements(config) {
 		sigInst.draw(2, 2, 2, 2);
     });
 
+    $(document).bind('keydown', function(a) {
+        // esc button close info window
+        if (a.which == 27) {
+            $GP.info_close.trigger('click');
+            $GP.search.clean();
+        }
+    });
+
     a = window.location.hash.substr(1);
     if (0 < a.length) {
         $GP.search.exactMatch = !0, $GP.search.search(a)
         $GP.search.clean();
     }
-
 }
 
 
