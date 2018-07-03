@@ -107,7 +107,23 @@ function setupGUI(config) {
     $GP.show_illegal = function() {return document.getElementById("show_illegal").checked};
     $GP.show_edges = function() {return document.getElementById("show_edges").checked};
     config.GP=$GP;
+    initAgeVerify();
     initSigma(config);
+}
+
+
+function initAgeVerify() {
+    let ageModal = $('#age-verification-window');
+    let keyName = 'porngraph-age-verify';
+    let ageVerify = localStorage.getItem(keyName);
+    if (ageVerify) {
+        ageModal.hide();
+    } else {
+        ageModal.find('button').click(function(a) {
+            localStorage.setItem(keyName, true);
+            ageModal.hide();
+        });
+    }
 }
 
 
