@@ -24,137 +24,131 @@
 
 
 <body>
-<div class="sigma-parent">
-    <div class="sigma-expand" id="sigma-canvas"></div>
-</div>
+    <div class="sigma-parent">
+        <div class="sigma-expand" id="sigma-canvas"></div>
+    </div>
 
-<div id="age-verification-window">
-	<div  class="age-verification-modal clearfix">
-        <h1>ДЛЯ ПРОДОЛЖЕНИЯ РАБОТЫ, ПОЖАЛУЙСТА, ПОДТВЕРДИТЕ, ЧТО ВЫ СТАРШЕ 18-ТИ ЛЕТ</h1>
-        <p>
-            Данный сайт предназначен сугубо для лиц 18 лет и старше. Если вы моложе 18 лет, то, пожалуйста, покиньте этот сайт.
-            Этот сайт может содержать изображения, видео, аудио, текст для взрослых людей, занимающихся действиями сексуального характера.
-            Если доступ и просмотр материалов для взрослых не законен для Вас, пожалуйста, покиньте сайт прямо сейчас.
-        </p>
-        <p>
-            Продолжая и подтверждая, что вам 18 лет и более, вы самостоятельно подтверждаете доступ к просмотру сексуально откровенных материалов для взрослых, такиx, как фильмы для взрослых, хардкор фильмы для взрослых, XXX фильмы.
-            Вашим выбором Вы берете на себя ответственность за любые Ваши действия на сайте, личные последствия от использования сайта и соблюдение общественных и социальных норм.
-            Создатели этого сайта и поставщики услуг не несут никакой ответственности за Ваш выбор - продолжить использование этого сайта.
-        </p>
-        <p>
-            Данный сайт не предназначен для совместного использования с лицами младше 18 лет и предназначен сугубо для персонального единоличного использования.
-            Для согласия с вышеприведенной информацией, подтвердите свою дату рождения и нажмите кнопку ВОЙТИ.</p>
-        <br>
-        <button data-js-age-verification="accept">accept</button>
-	</div>
-</div>
-
-<div id="illegal_popup">
-    Тут должна быть кнопка подтверждения возраста и другая, закрывающая окно к херамс.
-    <button data-js-illegal="decline">decline</button>
-</div>
-
-
-<div id="mainpanel">
-    <div class="col">
-        <div id="maintitle"><h1>pornGraph</h1></div>
-        <div id="title">Relations graph visualisation for TOP10 videos from pornhub.com</div>
-        <div class="info cf">
-            <dl>
-                <dt class="moreinformation"></dt>
-                <dd class="line"><a href="#information" class="line fb">More about this visualisation</a></dd>
-            </dl>
+    <div id="age-verification-window">
+        <div  class="age-verification-modal clearfix">
+            <h1>ДЛЯ ПРОДОЛЖЕНИЯ РАБОТЫ, ПОЖАЛУЙСТА, ПОДТВЕРДИТЕ, ЧТО ВЫ СТАРШЕ 18-ТИ ЛЕТ</h1>
+            <p>
+                Данный сайт предназначен сугубо для лиц 18 лет и старше. Если вы моложе 18 лет, то, пожалуйста, покиньте этот сайт.
+                Этот сайт может содержать изображения, видео, аудио, текст для взрослых людей, занимающихся действиями сексуального характера.
+                Если доступ и просмотр материалов для взрослых не законен для Вас, пожалуйста, покиньте сайт прямо сейчас.
+            </p>
+            <p>
+                Продолжая и подтверждая, что вам 18 лет и более, вы самостоятельно подтверждаете доступ к просмотру сексуально откровенных материалов для взрослых, такиx, как фильмы для взрослых, хардкор фильмы для взрослых, XXX фильмы.
+                Вашим выбором Вы берете на себя ответственность за любые Ваши действия на сайте, личные последствия от использования сайта и соблюдение общественных и социальных норм.
+                Создатели этого сайта и поставщики услуг не несут никакой ответственности за Ваш выбор - продолжить использование этого сайта.
+            </p>
+            <p>
+                Данный сайт не предназначен для совместного использования с лицами младше 18 лет и предназначен сугубо для персонального единоличного использования.
+                Для согласия с вышеприведенной информацией, подтвердите свою дату рождения и нажмите кнопку ВОЙТИ.</p>
+            <br>
+            <button data-js-age-verification="accept">accept</button>
         </div>
+    </div>
 
-        <div id="legend">
-            <div class="box">
-                <h2>Legend:</h2>
+    <div id="mainpanel">
+        <div class="col">
+            <div id="maintitle"><h1>pornGraph</h1></div>
+            <div id="title">Граф похожих роликов с pornhub.com</div>
+            <div class="info cf">
                 <dl>
-                    <dt class="node"></dt>
-                    <dd>video</dd>
-                    <dt class="edge"></dt>
-                    <dd>related</dd>
-                    <dt class="colours"></dt>
-                    <dd>depth level from root</dd>
-                    <dt class="node size"></dt>
-                    <dd>in-degree</dd>
+                    <dt class="moreinformation"></dt>
+                    <dd class="line"><a href="#information" class="line fb">О проекте</a></dd>
                 </dl>
             </div>
-        </div>
-        <div>
-            <input type="checkbox" id="show_illegal"/><label for="show_illegal">Show preview images</label>
-        </div>
-        <div>
-            <input type="checkbox" id="show_edges"/><label for="show_edges">Show edges</label>
-        </div>
-        <div class="b1">
-            <div class="cf" id="attributeselect"><h2>Group Selector:</h2>
-                <div class="list cf"></div>
-            </div>
-            <div id="search" class="cf"><h2>Search:</h2>
-                <input type="text" name="search" value="Search by name" class="empty"/>
-                <div class="state"></div>
-                <div class="results"></div>
-            </div>
-        </div>
-    </div>
-    <div id="information">
-        <h3>Что это?</h3>
-        <p>
-            Граф "друзей" для роликов с pornhub.com построенный начиная от TOP10 по рейтингу.
-            Вершинами являются сами видео, связи - ссылки на похожие ролики.
-            Размер вершины прямо пропорционален количеству входящих ссылок (сколько роликов ссылаются на данный как похожий).
-            Цветом вершины обозначен её уровень удалённости от корня - level 0 занят роликами с которых начинался обход дерева,
-            level 1 - те, на кого они ссылаются и так далее.
-        </p>
-        <h3>Как обновляются данные?</h3>
-        <p>
-            На данный момент никак. Все данные были собраны весной 2018 года и с тех пор не обновлялись.
-        </p>
-        <h3>Почему роликов так мало?</h3>
-        <p>
-            Браузер с трудом тянет большое количество точек на графе, потому визуализация ограничена пятым уровнем глубины от корня.
-            Данные были собраны до 9 уровня, взять из можно <a href="https://github.com/esemi/pornhub-graph/tree/master/data/mongodump/porngraph" target="_blank">тут</a>.
-        </p>
-        <h3>Где почитать подробнее?</h3>
-        <p>
-            <a href="#todo habr post link" target="_blank">на хабре</a>.
-        </p>
-        <h3>Как поддержать проект?</h3>
-        <p>
-            <span>BTC 3ET3dFXU5zRKG4929HFZEx7h2jPP5VzwuD</span>
-            <span>ETH 0x6385d2b118e9f7868723334595e0f76c94fa28ef</span>
-            <span>XMR 44GcnmJrQVjhXp3nEJ77wSgSqpUi8UYb8HPj5Fvh4bmpGVBerpXPHTxjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3dvLmQ6</span>
-        </p>
-    </div>
-</div>
-<div id="zoom">
-    <div class="z" rel="in"></div>
-    <div class="z" rel="out"></div>
-    <div class="z" rel="center"></div>
-</div>
 
-<div id="copyright">
-    <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img
-            alt="Creative Commons License" style="border-width:0" src="images/CC.png"/></a>
-</div>
-<div id="attributepane">
-    <div class="text">
-        <div title="Close" class="left-close returntext">
-            <div class="c cf"><span>Return to the full network</span></div>
+            <div id="legend">
+                <div class="box">
+                    <h2>Легенда:</h2>
+                    <dl>
+                        <dt class="node"></dt>
+                        <dd>ролик</dd>
+                        <dt class="edge"></dt>
+                        <dd>ссылка на похожий</dd>
+                        <dt class="colours"></dt>
+                        <dd>удалённость от корня</dd>
+                        <dt class="node size"></dt>
+                        <dd>количество входящих ссылок</dd>
+                    </dl>
+                </div>
+            </div>
+            <div>
+                <input type="checkbox" id="show_illegal"/><label for="show_illegal">Показывать превью</label>
+            </div>
+            <div>
+                <input type="checkbox" id="show_edges" checked="checked" /><label for="show_edges">Показывать рёбра</label>
+            </div>
+            <div class="b1">
+                <div class="cf" id="attributeselect"><h2>Выбор уровня:</h2>
+                    <div class="list cf"></div>
+                </div>
+                <div id="search" class="cf"><h2>Найти:</h2>
+                    <input type="text" name="search" placeholder="Имя или хеш видео" class="empty"/>
+                    <div class="state"></div>
+                    <div class="results"></div>
+                </div>
+            </div>
         </div>
-        <div class="nodeattributes">
-            <div class="name"></div>
-            <div class="preview"></div>
-            <div class="data"></div>
-            <div class="p">Connections:</div>
-            <div class="link">
-                <ul>
-                </ul>
+        <div id="information">
+            <h3>Что это?</h3>
+            <p>
+                Граф "друзей" для роликов с pornhub.com построенный начиная от TOP10 по рейтингу.
+                Вершинами являются сами видео, связи - ссылки на похожие ролики.
+                Размер вершины прямо пропорционален количеству входящих ссылок (сколько роликов ссылаются на данный как похожий).
+                Цветом вершины обозначен её уровень удалённости от корня - level 0 занят роликами с которых начинался обход дерева,
+                level 1 - те, на кого они ссылаются и так далее.
+            </p>
+            <h3>Как обновляются данные?</h3>
+            <p>
+                На данный момент никак. Все данные были собраны весной 2018 года и с тех пор не обновлялись.
+            </p>
+            <h3>Почему роликов так мало?</h3>
+            <p>
+                Браузер с трудом тянет большое количество точек на графе, потому визуализация ограничена пятым уровнем глубины от корня.
+                Данные были собраны до 9 уровня, взять из можно <a href="https://github.com/esemi/pornhub-graph/tree/master/data/mongodump/porngraph" target="_blank">тут</a>.
+            </p>
+            <h3>Где почитать подробнее?</h3>
+            <p>
+                <a href="#todo habr post link" target="_blank">на хабре</a>.
+            </p>
+            <h3>Как поддержать проект?</h3>
+            <table>
+                <tr><td>BTC</td><td>3ET3dFXU5zRKG4929HFZEx7h2jPP5VzwuD</td></tr>
+                <tr><td>ETH</td><td>0x6385d2b118e9f7868723334595e0f76c94fa28ef</td></tr>
+                <tr><td>XMR</td><td>44GcnmJrQVjhXp3nEJ77wSgSqpUi8UYb8HPj5Fvh4bmpGVBerpXPHTxjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3dvLmQ6</td></tr>
+            </table>
+        </div>
+    </div>
+    <div id="zoom">
+        <div class="z" rel="in"></div>
+        <div class="z" rel="out"></div>
+        <div class="z" rel="center"></div>
+    </div>
+
+    <div id="copyright">
+        <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img
+                alt="Creative Commons License" style="border-width:0" src="images/CC.png"/></a>
+    </div>
+    <div id="attributepane">
+        <div class="text">
+            <div title="Close" class="left-close returntext">
+                <div class="c cf"><span>Назад к полному виду</span></div>
+            </div>
+            <div class="nodeattributes">
+                <div class="name"></div>
+                <div class="preview"></div>
+                <div class="data"></div>
+                <div class="p">Связи:</div>
+                <div class="link">
+                    <ul>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <a target="_blank" rel="nofollow" href="https://github.com/esemi/pornhub-graph" class="github-corner" aria-label="View source on Github">
         <svg width="90" height="90" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
             <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
