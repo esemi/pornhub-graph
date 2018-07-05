@@ -20,6 +20,7 @@ pornGraph  [![Build Status](https://travis-ci.org/esemi/pornhub-graph.svg?branch
 - ~Описание~
 - ~18+ банер~
 - Вверстать
+- ga/metric 
 - юр консалт
 - хабр
 - договориться с порнхабом
