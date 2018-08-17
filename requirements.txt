@@ -3,7 +3,7 @@ aiodns==1.1.1
 async_timeout==3.0.0
 lxml==4.2.4
 pyppeteer==0.0.20
-asynctest
+asynctest==0.12.2
 requests
 motor
 pymongo
