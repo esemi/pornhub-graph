@@ -6,5 +6,5 @@ pyppeteer==0.0.20
 asynctest==0.12.2
 requests==2.19.1
 motor==2.0.0
-pymongo
+pymongo==3.7.1
 Fabric3
