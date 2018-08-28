@@ -1,4 +1,4 @@
-aiohttp==3.3.2
+aiohttp==3.4.0
 aiodns==1.1.1
 async_timeout==3.0.0
 lxml==4.2.4
