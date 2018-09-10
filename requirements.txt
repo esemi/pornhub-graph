@@ -2,7 +2,7 @@ aiohttp==3.4.1
 aiodns==1.1.1
 async_timeout==3.0.0
 lxml==4.2.4
-pyppeteer==0.0.20
+pyppeteer==0.0.23
 asynctest==0.12.2
 requests==2.19.1
 motor==2.0.0
