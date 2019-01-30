@@ -1,5 +1,5 @@
 aiohttp
-aiodns
+aiodns==1.2.0
 async_timeout
 lxml
 pyppeteer
