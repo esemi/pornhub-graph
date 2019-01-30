@@ -7,4 +7,4 @@ asynctest
 requests
 motor
 pymongo
-Fabric3
+Fabric3==1.14.post1
