@@ -1,0 +1,10 @@
+aiohttp
+aiodns
+async_timeout
+lxml
+pyppeteer
+asynctest
+requests
+motor
+pymongo
+Fabric3
