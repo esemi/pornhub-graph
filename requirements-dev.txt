@@ -5,6 +5,6 @@ lxml
 pyppeteer
 asynctest
 requests
-motor
+motor==2.0.0
 pymongo
 Fabric3
