@@ -2,7 +2,7 @@ aiohttp
 aiodns
 async_timeout
 lxml
-pyppeteer
+pyppeteer==0.0.25
 asynctest
 requests
 motor
