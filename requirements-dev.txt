@@ -4,7 +4,7 @@ async_timeout
 lxml
 pyppeteer
 asynctest
-requests
+requests==2.21.0
 motor
 pymongo
 Fabric3
