@@ -6,5 +6,5 @@ pyppeteer
 asynctest
 requests
 motor
-pymongo
+pymongo==3.8.0
 Fabric3
