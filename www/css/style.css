@@ -673,7 +673,7 @@ div .preview img {
     padding: 2rem;
     position: relative;
     top: 100px;
-    width: 825px;
+    max-width: 825px;
     text-align: center;
     zoom: 1;
     z-index: 10005;
