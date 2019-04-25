@@ -263,7 +263,7 @@ margin-right:10px;
 }
 
 #mainpanel .col {
-    width: 240px;
+    max-width: 240px;
     padding: 18px 18px 18px 18px;
     margin: 0;
 }
