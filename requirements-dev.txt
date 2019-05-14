@@ -3,7 +3,7 @@ aiodns
 async_timeout
 lxml
 pyppeteer
-asynctest
+asynctest==0.13.0
 requests
 motor
 pymongo
