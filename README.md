@@ -1,7 +1,6 @@
 pornGraph 
 ---
-[![Build Status](https://travis-ci.org/esemi/pornhub-graph.svg?branch=master)](https://travis-ci.org/esemi/pornhub-graph) [![Updates](https://pyup.io/repos/github/esemi/pornhub-graph/shield.svg)](https://pyup.io/repos/github/esemi/pornhub-graph/)
-[![Python 3](https://pyup.io/repos/github/esemi/pornhub-graph/python-3-shield.svg)](https://pyup.io/repos/github/esemi/pornhub-graph/)
+[![Build Status](https://travis-ci.org/esemi/pornhub-graph.svg?branch=master)](https://travis-ci.org/esemi/pornhub-graph)
 
 
 ### todo
