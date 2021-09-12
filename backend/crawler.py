@@ -1,17 +1,15 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging
 import asyncio
-from typing import Optional
-from collections import Counter
-
+import logging
 import lxml.html as l
 import math
-
 import time
+from collections import Counter
 from pyppeteer import launch
 from pyppeteer.element_handle import ElementHandle
+from typing import Optional
 
 from storage import S
 from utils import get_default_arg_parser, fetch_current_top
@@ -22,9 +20,6 @@ MAX_TRIES_PARSE = 10
 DEBUG = False
 
 _BROWSER = None
-
-# todo correct sigkill handler
-# todo custom user agent
 
 
 async def parse_title(title: ElementHandle) -> Optional[str]:

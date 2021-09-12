@@ -4,24 +4,30 @@
 
 
 ### todo
-- обновить зависимости
-- poetry
+- travis+fabric -> actions
 - доверстать на фрилансерах
 - ga/metric 
 - хабр/медиум - статья
 - ссылка на паблик
-- удалить дампы из гита
 
 
 ### Local run
 ```bash
-$ cd backend
-$ ./crawler.py -c2 -i1 10
-$ ./crawler.py --continue -c2 -i1000 10
-$ ./optional_info_fetch.py
-$ ./export_dot.py -d 5
+$ git clone
+$ cd pornhub-graph
+$ python3.9 -m venv venv
+$ source venv/bin/activate
+$ pip install poetry
+$ poetry config virtualenvs.create false --local
+$ poetry install
+$ poetry run python backend/crawler.py -c2 -i1 10
+$ poetry run python backend/crawler.py --continue -c2 -i1000 10
+$ poetry run python backend/optional_info_fetch.py
+$ poetry run python backend/export_dot.py -d 5
 
-$ gephi process and export w/ sigmajs plugin
+### gephi process and export w/ sigmajs plugin
 
-$ ./post_process.py
+$ poetry run python backend/post_process.py
+
+### deploy
 ```
