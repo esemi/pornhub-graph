@@ -1,10 +1,13 @@
 :WIP: Граф роликов с pornhub.com и их перелинковка между собой 
 ---
-[![Build Status](https://travis-ci.org/esemi/pornhub-graph.svg?branch=master)](https://travis-ci.org/esemi/pornhub-graph)
+[![Pages](https://github.com/esemi/pornhub-graph/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/esemi/pornhub-graph/actions/workflows/deploy.yml)
+Поиграть ручками [можно тут](https://esemi.github.io/pornhub-graph/) ;)
+
+
+[![image](https://user-images.githubusercontent.com/4115497/132999238-73e0287c-4fe5-4b7e-bc5d-4ab68fcea550.png)](https://esemi.github.io/pornhub-graph/)
 
 
 ### todo
-- travis+fabric -> actions
 - доверстать на фрилансерах
 - ga/metric 
 - хабр/медиум - статья
