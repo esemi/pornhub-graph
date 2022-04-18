@@ -116,10 +116,11 @@ function initAgeVerify() {
     let ageModal = $('#age-verification-window');
     let keyName = 'porngraph-age-verify';
     let ageVerify = localStorage.getItem(keyName);
+    let acceptButton = ageModal.find('.age-verification-accept')
     if (ageVerify) {
         ageModal.hide();
     } else {
-        ageModal.find('button').click(function(a) {
+        acceptButton.click(function(a) {
             localStorage.setItem(keyName, true);
             ageModal.hide();
         });
@@ -224,7 +225,7 @@ function Search(a) {
         this.searching = !0;
         this.lastSearch = a;
         this.results.empty();
-        if (2 >= a.length) this.results.html("<i>You must search for a name with a minimum of 3 letters.</i>");
+        if (2 >= a.length) this.results.html("<i>Введите минимум 3 символа для поиска.</i>");
         else {
             sigInst.iterNodes(function (a) {
                 if (g.test(a.label.toLowerCase()) || g.test(a.id)) {
@@ -232,9 +233,9 @@ function Search(a) {
                 }
             });
             c.length ? (b = !0, nodeActive(c[0].id)) : b = showCluster(a);
-            a = ["<b>Search Results: </b>"];
+            a = [];
             if (1 < c.length) for (var d = 0, h = c.length; d < h; d++) a.push('<a href="#' + c[d].id + '" onclick="nodeActive(\'' + c[d].id + "')\">" + c[d].name + "</a>");
-            0 == c.length && !b && a.push("<i>No results found.</i>");
+            0 == c.length && !b && a.push("<i>Ничего не найдено.</i>");
             1 < a.length && this.results.html(a.join(""));
            }
         if(c.length!=1) this.results.show();
@@ -343,14 +344,14 @@ function nodeActive(a) {
 	var f=[];
 
     size=Object.size(mutual);
-    f.push("<h2>Mututal (" + size + ")</h2>");
-    (size>0)? f=f.concat(createList(mutual)) : f.push("No mutual links<br>");
+    f.push("<h2>Связи (" + size + ")</h2>");
+    (size>0)? f=f.concat(createList(mutual)) : f.push("Нет связанных роликов<br>");
     size=Object.size(incoming);
-    f.push("<h2>Incoming (" + size + ")</h2>");
-    (size>0)? f=f.concat(createList(incoming)) : f.push("No incoming links<br>");
+    f.push("<h2>Входящие (" + size + ")</h2>");
+    (size>0)? f=f.concat(createList(incoming)) : f.push("Нет входящих ссылок<br>");
     size=Object.size(outgoing);
-    f.push("<h2>Outgoing (" + size + ")</h2>");
-    (size>0)? f=f.concat(createList(outgoing)) : f.push("No outgoing links<br>");
+    f.push("<h2>Исходящие (" + size + ")</h2>");
+    (size>0)? f=f.concat(createList(outgoing)) : f.push("Нет исходящих ссылок<br>");
 
     b.hidden = !1;
     b.attr.color = b.color;
@@ -372,7 +373,7 @@ function nodeActive(a) {
         $GP.info_preview.html('<a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank"><img src="' + img_src + '"></img></a>');
 
         e = [];
-        var h = '<span><a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank">see on pornhub</a></span><br/>';
+        var h = '<span><a href="https://www.pornhub.com/view_video.php?viewkey=' + f.attributes['hash'] + '" target="_blank">посмотреть оригинал</a></span><br/>';
         e.push(h);
 
         for (var attr in f.attributes) {
@@ -394,7 +395,7 @@ function nodeActive(a) {
     }
 
     $GP.info_data.show();
-    $GP.info_p.html("Connections:");
+    $GP.info_p.html("Связи:");
     $GP.info.animate({width:'show'},350);
 	$GP.info_donnees.hide();
 	$GP.info_donnees.show();
@@ -422,10 +423,9 @@ function showCluster(a) {
         }
         sigInst.clusters[a] = e;
         sigInst.draw(2, 2, 2, 2);
-        $GP.info_name.html("<b>" + a + "</b>");
         $GP.info_data.hide();
         $GP.info_preview.hide();
-        $GP.info_p.html("Group Members:");
+        $GP.info_p.html("Кластер вершин:");
         $GP.info_link.find("ul").html(f.join(""));
         $GP.info.animate({width:'show'},350);
         $GP.search.clean();
