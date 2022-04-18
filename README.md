@@ -21,7 +21,7 @@ firefox www/index.html
 
 ### Local run backend
 ```commandline
-git clone
+git clone https://github.com/esemi/pornhub-graph.git
 cd pornhub-graph
 python3.9 -m venv venv
 source venv/bin/activate
@@ -32,8 +32,6 @@ poetry run python backend/crawler.py -c2 -i1 10
 poetry run python backend/crawler.py --continue -c2 -i1000 10
 poetry run python backend/optional_info_fetch.py
 poetry run python backend/export_dot.py -d 5
-
 manual use gephi process and export w/ sigmajs plugin
-
 poetry run python backend/post_process.py
 ```
