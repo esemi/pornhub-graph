@@ -344,7 +344,7 @@ function nodeActive(a) {
 	var f=[];
 
     size=Object.size(mutual);
-    f.push("<h2>Связи (" + size + ")</h2>");
+    f.push("<h2>Двусторонние (" + size + ")</h2>");
     (size>0)? f=f.concat(createList(mutual)) : f.push("Нет связанных роликов<br>");
     size=Object.size(incoming);
     f.push("<h2>Входящие (" + size + ")</h2>");
