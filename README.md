@@ -1,4 +1,4 @@
-:WIP: Граф роликов с pornhub.com и их перелинковка между собой 
+:sparkles: Граф роликов с pornhub.com и их перелинковка между собой 
 ---
 [![Pages](https://github.com/esemi/pornhub-graph/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/esemi/pornhub-graph/actions/workflows/deploy.yml)
 
@@ -6,10 +6,6 @@
 
 
 [![image](https://user-images.githubusercontent.com/4115497/132999238-73e0287c-4fe5-4b7e-bc5d-4ab68fcea550.png)](https://esemi.github.io/pornhub-graph/)
-
-
-### todo
-- дизигн и вёрстка
 
 
 ### Local run frontend
