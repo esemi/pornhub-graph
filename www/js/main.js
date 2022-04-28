@@ -18,8 +18,8 @@ function GetQueryStringParams(sParam,defaultVal) {
 
 
 jQuery.getJSON(GetQueryStringParams("config","config.json"), function(data, textStatus, jqXHR) {
-	config=data;
-	$(document).ready(setupGUI(config));
+    config=data;
+    $(document).ready(setupGUI(config));
 });
 
 
@@ -38,8 +38,8 @@ function resetScale() {
 
 
 function initSigma(config) {
-	var data=config.data
-	
+    var data=config.data
+    
     var drawProps, graphProps, mouseProps;
 
     drawProps=config.sigma.drawingProperties;
@@ -53,45 +53,45 @@ function initSigma(config) {
 
 
     dataReady = function() {//This is called as soon as data is loaded
-		a.clusters = {};
+        a.clusters = {};
 
-		a.iterNodes(
-			function (b) { //This is where we populate the array used for the group select box
+        a.iterNodes(
+            function (b) { //This is where we populate the array used for the group select box
 
-				// note: index may not be consistent for all nodes. Should calculate each time. 
-				 // alert(JSON.stringify(b.attr.attributes[5].val));
-				// alert(b.x);
-				a.clusters[b.color] || (a.clusters[b.color] = []);
-				a.clusters[b.color].push(b.id);//SAH: push id not label
-			}
-		
-		);
+                // note: index may not be consistent for all nodes. Should calculate each time. 
+                 // alert(JSON.stringify(b.attr.attributes[5].val));
+                // alert(b.x);
+                a.clusters[b.color] || (a.clusters[b.color] = []);
+                a.clusters[b.color].push(b.id);//SAH: push id not label
+            }
+        
+        );
 
-		a.iterEdges(function (b) {
-		    b.hidden = !$GP.show_edges();
-		});
-	
-		a.bind("upnodes", function (a) {
-		    nodeActive(a.content[0])
-		});
+        a.iterEdges(function (b) {
+            b.hidden = !$GP.show_edges();
+        });
+    
+        a.bind("upnodes", function (a) {
+            nodeActive(a.content[0])
+        });
 
-		a.draw();
-		configSigmaElements(config);
-	}
+        a.draw();
+        configSigmaElements(config);
+    }
 
     if (data.indexOf("gexf")>0 || data.indexOf("xml")>0)
         a.parseGexf(data,dataReady);
     else
-	    a.parseJson(data,dataReady);
+        a.parseJson(data,dataReady);
     gexf = sigmaInst = null;
 }
 
 
 function setupGUI(config) {
-	$GP = {
-		calculating: !1,
-		showgroup: !1
-	};
+    $GP = {
+        calculating: !1,
+        showgroup: !1
+    };
     $GP.intro = $("#intro");
     $GP.info = $("#attributepane");
     $GP.info_donnees = $GP.info.find(".nodeattributes");
@@ -128,8 +128,9 @@ function initAgeVerify() {
 }
 
 
+
 function configSigmaElements(config) {
-	$GP=config.GP;
+    $GP=config.GP;
     let sorted_keys = Object.keys(sigInst.clusters).sort((x, y)=>sigInst.clusters[x].length - sigInst.clusters[y].length)
 
     var a = [],
@@ -149,22 +150,22 @@ function configSigmaElements(config) {
         var a = $(this),
             b = a.attr("rel");
         a.click(function () {
-			if (b == "center") {
-				resetScale();
-			} else {
-		        var a = sigInst._core;
-	            sigInst.zoomTo(a.domElements.nodes.width / 2, a.domElements.nodes.height / 2, a.mousecaptor.ratio * ("in" == b ? 1.5 : 0.5));		
-			}
+            if (b == "center") {
+                resetScale();
+            } else {
+                var a = sigInst._core;
+                sigInst.zoomTo(a.domElements.nodes.width / 2, a.domElements.nodes.height / 2, a.mousecaptor.ratio * ("in" == b ? 1.5 : 0.5));        
+            }
 
         })
     });
 
     $('#show_edges').bind('change', function() {
         let hide = !$GP.show_edges();
-		sigInst.iterEdges(function (b) {
-		    b.hidden = hide;
-		});
-		sigInst.draw(2, 2, 2, 2);
+        sigInst.iterEdges(function (b) {
+            b.hidden = hide;
+        });
+        sigInst.draw(2, 2, 2, 2);
     });
 
     $(document).bind('keydown', function(a) {
@@ -279,7 +280,7 @@ function nodeActive(a) {
     sigInst.neighbors = {};
     sigInst.detail = !0;
     var b = sigInst._core.graph.nodesIndex[a];
-	var outgoing={},incoming={},mutual={};//SAH
+    var outgoing={},incoming={},mutual={};//SAH
     sigInst.iterEdges(function (b) {
         b.attr.lineWidth = !1;
         b.hidden = !0;
@@ -289,8 +290,8 @@ function nodeActive(a) {
             colour: b.color
         };
         
-   	   if (a==b.source) outgoing[b.target]=n;		//SAH
-	   else if (a==b.target) incoming[b.source]=n;		//SAH
+          if (a==b.source) outgoing[b.target]=n;        //SAH
+       else if (a==b.target) incoming[b.source]=n;        //SAH
        if (a == b.source || a == b.target) sigInst.neighbors[a == b.target ? b.source : b.target] = n;
        b.hidden = !$GP.show_edges(), b.attr.color = "rgba(0, 0, 0, 1)";
     });
@@ -313,7 +314,7 @@ function nodeActive(a) {
     
     var createList=function(c) {
         var f = [];
-    	var e = [], g;
+        var e = [], g;
         for (g in c) {
             var d = sigInst._core.graph.nodesIndex[g];
             d.hidden = !1;
@@ -339,9 +340,9 @@ function nodeActive(a) {
                 f.push('<li class="membership"><a href="#' + c.id + '" onmouseover="sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex[\'' + c.id + '\'])\" onclick=\"nodeActive(\'' + c.id + '\')" onmouseout="sigInst.refresh()">' + c.name + "</a></li>");
             }
             return f;
-	}
+    }
 
-	var f=[];
+    var f=[];
 
     size=Object.size(mutual);
     f.push("<h2>Двусторонние (" + size + ")</h2>");
@@ -397,8 +398,8 @@ function nodeActive(a) {
     $GP.info_data.show();
     $GP.info_p.html("Связи:");
     $GP.info.animate({width:'show'},350);
-	$GP.info_donnees.hide();
-	$GP.info_donnees.show();
+    $GP.info_donnees.hide();
+    $GP.info_donnees.show();
     sigInst.active = a;
     window.location.hash = b.id;
 }
