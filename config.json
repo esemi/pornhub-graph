@@ -1,0 +1,32 @@
+{
+  "type": "network",
+  "version": "1.0",
+  "data": "data-prepared.json",
+  "custom": {
+    "nodeAttributeFilter": ["Уровень", "Взвешенная исходящая степень", "Взвешенная входящая степень"]
+  },
+  "sigma": {
+    "drawingProperties": {
+      "defaultEdgeType": "curve",
+      "defaultHoverLabelBGColor": "#002147",
+      "defaultLabelBGColor": "#ddd",
+      "activeFontStyle": "bold",
+      "defaultLabelColor": "#acabab",
+      "labelThreshold": 10,
+      "defaultLabelHoverColor": "#fff",
+      "fontStyle": "bold",
+      "hoverFontStyle": "bold",
+      "defaultLabelSize": 12
+    },
+    "graphProperties": {
+      "maxEdgeSize": 0.5,
+      "minEdgeSize": 0.2,
+      "minNodeSize": 1,
+      "maxNodeSize": 7
+    },
+    "mouseProperties": {
+      "maxRatio": 30,
+      "minRatio": 0.75
+    }
+  }
+}
