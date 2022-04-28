@@ -21,8 +21,8 @@ html,body {
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
-	font-size: 12px;
-	font-family: sans-serif;
+	font-size: 16px;
+	font-family: "Arial", Helvetica,sans-serif;
 	line-height:1.25em;
 }
 
@@ -40,6 +40,7 @@ a:hover {
 	position: relative;
 	height: 100%;
 }
+
 
 .sigma-expand {
 	position: absolute;
@@ -71,13 +72,14 @@ canvas#sigma_bg_1 {
     top:0;
     right:0;
     z-index: 1;
-	width: 240px;
+	width: 100%;
+    max-width: 350px;
 	background-color: #151515;
 	margin: 0;
 	word-wrap: break-word;
 	background-color:rgba(21,21,21,0.8);
 	border-left: 1px solid #292929;
-	padding: 0px 18px 0px 18px;
+	padding: 0px 20px 0px 20px;
     color:#acabab;
 	
 }
@@ -109,8 +111,9 @@ canvas#sigma_bg_1 {
 }
 
 #attributepane .returntext span {
-	padding-left: 5px;
+	padding-left: 10px;
 	display: block;
+    font-size: 16px;
 }
 
 #attributepane .close {
@@ -152,20 +155,24 @@ float: left;
 	height:85%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	border-bottom:1px solid #999;
 }
 
 #attributepane .name {
-font-size: 14px;
-cursor: default;
-padding-bottom: 10px;
-padding-top: 18px;
-font-weight:bold;
-	color:#f90;
+    font-size: 25px;
+    cursor: default;
+    padding-bottom: 10px;
+    padding-top: 18px;
+    font-weight:bold;
+    color:#f90;
+    line-height: 30px;
 }
 
 #attributepane .data {
-	color: #665;
+    color: #acabab;
+}
+#attributepane .data span {
+    font-size: 16px;
+    color: #f90;
 }
 
 #attributepane .data .plus {
@@ -179,19 +186,23 @@ font-weight:bold;
 }
 
 #attributepane .link {
-padding: 0 0 0 4px;
+    padding: 0 0 0 4px;
+    padding-top: 20px;
 }
 
 #attributepane .link li {
-padding-top: 2px;
-cursor:pointer;
+    padding-top: 2px;
+    cursor:pointer;
+    margin-bottom: 5px;
+    font-size: 16px;
 }
 
 #attributepane .p {
-padding-top: 10px;
-font-weight: bold;
-font-size:14px;
-	color: #f90;
+    padding-top: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #f90;
+    line-height: 20px;
 }
 
 .left-close {
@@ -256,6 +267,8 @@ margin-right:10px;
     z-index:20;
     position:fixed;
     top:0;
+    width: 100%;
+    max-width: fit-content;
 }
 
 #mainpanel .b1 {
@@ -263,13 +276,14 @@ margin-right:10px;
 }
 
 #mainpanel .col {
-    max-width: 240px;
+    width: 100%;
+    max-width: max-content;
     padding: 18px 18px 18px 18px;
     margin: 0;
 }
 
 #title {
-    font-size: 14px;
+    font-size: 16px;
     padding-bottom: 20px;
 }
 
@@ -393,16 +407,19 @@ color: #fff;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    max-width: 250px;
 }
 
 #attributeselect .list {
-	width: 240px;
+	width: 100%;
+    max-width: 300px;
 	overflow-x: hidden;
 	color: white;
 }
 
 #attributeselect .list a {
-    display:block;
+    display: flex;
+    align-items: center;
     padding: 4px 7px;
     text-decoration: none;
     color: ##acabab;
@@ -412,6 +429,7 @@ color: #fff;
 	-webkit-border-radius: 2px;
 	-ms-border-radius: 2px;
 	-o-border-radius: 2px;
+    line-height: 20px;
 }
 
 #attributeselect .list a:hover {
@@ -421,8 +439,11 @@ color: #fff;
 }
 
 .link h2 {
-    font-size: 1em;
-    padding-top: 1em;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #f90;
+    line-height: 25px;
+    padding-top: 20px;
 }
 
 #mainpanel dl {
@@ -484,7 +505,8 @@ color: #fff;
     margin-left: 5px;
 }
 #mainpanel h2 {
-	margin-bottom: 12px;
+	margin-bottom: 20px;
+    font-size: 20px;
 }
 
 #copyright {
@@ -506,7 +528,8 @@ color: #fff;
 #zoom {
 	z-index:999;
 	position: fixed;
-	left: 45%;
+	left: 50%;
+    transform: translateX(-50%);
 	bottom: 25px;
 	margin:0 auto;
 	padding: 0;
@@ -516,7 +539,11 @@ color: #fff;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	text-align:left;
+	text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    max-width: 200px;
 }
 
 #zoom .z {
@@ -527,7 +554,7 @@ color: #fff;
 	cursor: pointer;
 	border: none;
 	float:left;
-	margin-right:8px;
+	margin-right: 0;
 	background-repeat:no-repeat;
 	border-radius: 4px;
 		-moz-border-radius: 4px;
@@ -556,8 +583,7 @@ color: #fff;
 }
 
 .line {
-	font-size: 12px;
-	color: #acabab;
+	font-size: 16px;
 	text-decoration: none;
 	font-weight: bold;
 	cursor: pointer;
@@ -571,11 +597,14 @@ color: #fff;
 }
 
 #information h3 {
-    margin: 14px 0 4px 0;
+    margin-bottom: 20px;
+    font-size: 18px;
 }
 
 #information p {
-    margin: 0 0 4px 0;
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 20px;
 }
 
 #information .button {
@@ -666,6 +695,7 @@ div .preview img {
     font-size: 12px;
 }
 
+
 .age-verification-modal {
     background-color: #000;
     border: 1px solid #444;
@@ -680,8 +710,16 @@ div .preview img {
 }
 
 .age-verification-accept {
-    padding: 10px;
+    padding: 10px 20px;
     font-size: 16px;
+    border: 1px solid #ffffff;
+    border-radius: 100px;
+    cursor: pointer;
+}
+.age-verification-accept:hover {
+    color: #000000;
+    background-color: #ffffff;
+    transition: all 0.3s;
 }
 
 .clearfix:after, .clearfix:before {
@@ -695,4 +733,97 @@ div .preview img {
 .clearfix:after, .clearfix:before {
     content: " ";
     display: table;
+}
+
+
+
+h1 {
+    font-size: 25px;
+    line-height: 30px;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 15px;
+}
+
+.fancybox-skin {
+    background: #000000;
+    border: 1px solid #ffffff;   
+}
+
+#information {
+    padding: 30px;
+    background: #000000;
+    color: #ffffff
+}
+
+.show__item {
+    margin-bottom: 15px;
+}
+.show__item label {
+    margin-left: 10px;
+}
+.list div {
+    margin-bottom: 15px;
+}
+.list div a div {
+    display: block;
+    margin-bottom: 0;
+    margin-right: 10px!important;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;               
+}
+body::-webkit-scrollbar-track {
+    background: rgb(31, 31, 30);       
+
+}
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(84, 84, 85);    /* цвет плашки */
+    border-radius: 100px;       /* закругления плашки */
+    border: none;
+}
+
+
+.nodeattributes::-webkit-scrollbar {
+    width: 12px;               
+}
+.nodeattributes::-webkit-scrollbar-track {
+    background: rgb(31, 31, 30);       
+
+}
+.nodeattributes::-webkit-scrollbar-thumb {
+    background-color: rgb(84, 84, 85);    /* цвет плашки */
+    border-radius: 100px;       /* закругления плашки */
+    border: none;
+}
+
+.hidden {
+    display: none;
+    transition: all 0.3s;
+}
+
+@media (max-width:767.98px) {
+    #mainpanel {
+        display: none;
+    }
+    h1 {
+        font-size: 20px;
+    }
+    #age-verification-window p {
+        font-size: 14px;
+    }
+    #age-verification-window {
+        overflow: scroll;
+    }
+    .age-verification-modal {
+        top: 0;
+    }
+    #age-verification-window {
+        display: none;
+    }
 }
